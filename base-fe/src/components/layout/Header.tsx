@@ -10,7 +10,7 @@ export default function Header() {
             <header className="flex items-center justify-between px-4 py-3 border-b">
                 <a href="/" className="text-xl font-bold">12 SNEAKER</a>
                 <nav className="space-x-4 hidden md:flex gap-[0.313rem]">
-                    <a href="#" className="hover:text-blue-600">SNEAKER</a>
+                    <a href="/sneakers" className="hover:text-blue-600">SNEAKER</a>
                     <a href="#" className="hover:text-blue-600">SLIDE</a>
                     <a href="#" className="hover:text-blue-600">BAG</a>
                     <a href="#" className="hover:text-blue-600">KHUYẾN MÃI</a>

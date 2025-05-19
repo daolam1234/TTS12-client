@@ -2,6 +2,7 @@ import { useRoutes } from "react-router-dom"
 import ClientLayout from "./layouts/ClientLayout"
 import Register from "./pages/Auth/Register"
 import Login from "./pages/Auth/Login"
+import Sneakers from "./pages/Products/Sneakers"
 
 
 function App() {
@@ -18,6 +19,10 @@ function App() {
         {
           path: 'login',
           element: <Login/>
+        } ,
+        {
+          path: 'sneakers',
+          element: <Sneakers/>
         }  
       ]
     },
