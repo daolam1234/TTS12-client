@@ -1,31 +1,35 @@
-import { useRoutes } from "react-router-dom"
-import ClientLayout from "./layouts/ClientLayout"
-import Register from "./pages/Register"
-import Login from "./pages/Login"
+import { useRoutes } from "react-router-dom";
+import ClientLayout from "./layouts/ClientLayout";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+
+import { ProtectedRoute } from "./components/ProtectedRoute";
+import Homeadmin from "./pages/homeadmin";
 
 function App() {
-
   const router = useRoutes([
-     {
-      path: '/',
-      element: <ClientLayout/>,
+    {
+      path: "/",
+      element: <ClientLayout />,
       children: [
+        { path: "register", element: <Register /> },
+        { path: "auth/login", element: <Login /> },
+
+        // Các route cần phân quyền
         {
-          path: 'register',
-          element: <Register/>
+          path: "admin/dashboard",
+          element: (
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <Homeadmin />
+            </ProtectedRoute>
+          ),
         },
-        {
-          path: 'login',
-          element: <Login/>
-        }
-      ]
+      
+      ],
     },
-   
-  ])
-  
-  return (
-    <div>{router}</div>
-  )
+  ]);
+
+  return <div>{router}</div>;
 }
 
-export default App
+export default App;
