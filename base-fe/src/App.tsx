@@ -1,7 +1,8 @@
 import { useRoutes } from "react-router-dom"
 import ClientLayout from "./layouts/ClientLayout"
-import Register from "./pages/Register"
-import Login from "./pages/Login"
+import Register from "./pages/Auth/Register"
+import Login from "./pages/Auth/Login"
+
 
 function App() {
 
@@ -17,7 +18,7 @@ function App() {
         {
           path: 'login',
           element: <Login/>
-        }
+        }  
       ]
     },
    
