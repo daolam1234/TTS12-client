@@ -8,7 +8,7 @@ export default function Header() {
             </div>
 
             <header className="flex items-center justify-between px-4 py-3 border-b">
-                <a href="" className="text-xl font-bold">12 SNEAKER</a>
+                <a href="/" className="text-xl font-bold">12 SNEAKER</a>
                 <nav className="space-x-4 hidden md:flex gap-[0.313rem]">
                     <a href="#" className="hover:text-blue-600">SNEAKER</a>
                     <a href="#" className="hover:text-blue-600">SLIDE</a>
@@ -19,7 +19,7 @@ export default function Header() {
                 <div className="flex space-x-3">
                     <a href="">🔍</a>
                     <a href="">❤️</a>
-                    <a href="">👤</a>
+                    <a href="/login">👤</a>
                 </div>
             </header>
             <div className="h-56 w-full overflow-hidden">
