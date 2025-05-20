@@ -7,7 +7,7 @@ export interface FormValues {
   lastName: string;
   firstName: string;
   dob: string;
-  gender: string;
+  gender: "male" | "female";
   email: string;
   password: string;
 }

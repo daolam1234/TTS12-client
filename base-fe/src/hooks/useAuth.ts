@@ -1,6 +1,7 @@
+import { auth } from "@/providers";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../providers";
+
 import { toast } from "react-toastify";
 
 type Props = {
@@ -24,7 +25,7 @@ export const useAuth = ({ resource }: Props) => {
 
       localStorage.setItem("token", accessToken);
       localStorage.setItem("user", JSON.stringify(user));
-      localStorage.setItem("role", user.role); // nếu có phân quyền
+      localStorage.setItem("role", user.role ?? "user"); // fallback role nếu không có
 
       toast.success("Đăng nhập thành công!");
 
@@ -35,8 +36,8 @@ export const useAuth = ({ resource }: Props) => {
         navigate("/");
       }
     },
-    onError: () => {
-      toast.error("Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.");
+    onError: (error: any) => {
+      toast.error(error?.message || "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.");
     },
   });
 };

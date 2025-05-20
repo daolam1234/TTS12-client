@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import type { FormValues } from "@/types/auth/auth";
 
+
+
 export default function Register() {
   const {
     register,
@@ -36,7 +38,9 @@ export default function Register() {
             {...register("lastName", { required: "Họ là bắt buộc" })}
             className="w-full px-4 py-3 bg-gray-100 rounded"
           />
-          {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName.message}</p>}
+          {errors.lastName && (
+            <p className="text-red-500 text-sm">{errors.lastName.message}</p>
+          )}
 
           <input
             type="text"
@@ -44,14 +48,18 @@ export default function Register() {
             {...register("firstName", { required: "Tên là bắt buộc" })}
             className="w-full px-4 py-3 bg-gray-100 rounded"
           />
-          {errors.firstName && <p className="text-red-500 text-sm">{errors.firstName.message}</p>}
+          {errors.firstName && (
+            <p className="text-red-500 text-sm">{errors.firstName.message}</p>
+          )}
 
           <input
             type="date"
             {...register("dob", { required: "Ngày sinh là bắt buộc" })}
             className="w-full px-4 py-3 bg-gray-100 rounded text-gray-400"
           />
-          {errors.dob && <p className="text-red-500 text-sm">{errors.dob.message}</p>}
+          {errors.dob && (
+            <p className="text-red-500 text-sm">{errors.dob.message}</p>
+          )}
 
           <div className="flex items-center space-x-4">
             <label className="flex items-center">
@@ -73,7 +81,9 @@ export default function Register() {
               Nữ
             </label>
           </div>
-          {errors.gender && <p className="text-red-500 text-sm">{errors.gender.message}</p>}
+          {errors.gender && (
+            <p className="text-red-500 text-sm">{errors.gender.message}</p>
+          )}
 
           <input
             type="email"
@@ -81,7 +91,9 @@ export default function Register() {
             {...register("email", { required: "Email là bắt buộc" })}
             className="w-full px-4 py-3 bg-gray-100 rounded"
           />
-          {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
+          {errors.email && (
+            <p className="text-red-500 text-sm">{errors.email.message}</p>
+          )}
 
           <input
             type="password"
@@ -89,7 +101,9 @@ export default function Register() {
             {...register("password", { required: "Mật khẩu là bắt buộc" })}
             className="w-full px-4 py-3 bg-gray-100 rounded"
           />
-          {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
+          {errors.password && (
+            <p className="text-red-500 text-sm">{errors.password.message}</p>
+          )}
 
           <div className="flex items-center justify-between">
             <button
@@ -102,7 +116,10 @@ export default function Register() {
           </div>
 
           <div className="mt-6">
-            <Link to="/" className="flex items-center text-gray-600 hover:text-black transition-colors">
+            <Link
+              to="/"
+              className="flex items-center text-gray-600 hover:text-black transition-colors"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5 mr-2"

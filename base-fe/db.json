@@ -4,6 +4,24 @@
       "email": "test@example.com",
       "password": "123456",
       "id": 1
+    },
+    {
+      "lastName": "ccc",
+      "firstName": "vvv",
+      "dob": "2025-05-08",
+      "gender": "male",
+      "email": "viet223331111@gmail.com",
+      "password": "123456",
+      "id": 2
+    },
+    {
+      "lastName": "ccc",
+      "firstName": "vvv",
+      "dob": "2025-05-23",
+      "gender": "male",
+      "email": "duan1@gmail.com1",
+      "password": "$2b$10$xVdUdcP2iut8SW7l7Z2jQuyT.jeWvrRCtLgwTA/BFFL.7FRUaVzK6",
+      "id": 3
     }
   ],
   "products": [],
