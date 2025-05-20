@@ -1,8 +1,30 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Link } from "react-router-dom";
+import { useAuth } from "@/hooks";
+import { useForm } from "react-hook-form";
+import axios from "axios";
 
+
+type FormValuesLogin = {
+  email: string;
+  password: string;
+};
+  
 export default function Login() {
+const { mutate } = useAuth({ resource: "users" });
+
+  const { handleSubmit, register } = useForm<FormValuesLogin>();
+ const onSubmit = async (data: FormValuesLogin) => {
+  const res = await axios.get(
+    `http://localhost:3000/users?email=${data.email}&password=${data.password}`
+  );
+  if (res.data.length === 0) {
+    alert("Sai tài khoản hoặc mật khẩu!");
+    return;
+  }
+  mutate(data);
+};
   return (
    <div className="min-h-screen flex">
       <div className="w-1/2 flex items-center justify-center">
@@ -14,25 +36,23 @@ export default function Login() {
 
       <div className="w-1/2 flex items-center justify-center border-l">
         <form
-          
+          onSubmit={handleSubmit(onSubmit)}
           className="w-full max-w-sm space-y-5"
         >
           <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            
-            className="w-full px-4 py-3 bg-gray-100 rounded focus:outline-none"
-            required
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Mật khẩu"
-            
-            className="w-full px-4 py-3 bg-gray-100 rounded focus:outline-none"
-            required
-          />
+          type="email"
+          {...register("email")}
+          placeholder="Email"
+          className="w-full px-4 py-3 bg-gray-100 rounded focus:outline-none"
+          required
+        />
+        <input
+          type="password"
+          {...register("password")}
+          placeholder="Mật khẩu"
+          className="w-full px-4 py-3 bg-gray-100 rounded focus:outline-none"
+          required
+        />
           <div className="flex items-center justify-between">
             <button
               type="submit"

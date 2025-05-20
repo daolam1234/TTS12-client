@@ -3,6 +3,7 @@ import Footer from "@/components/layout/Footer";
 import { Link,  } from "react-router-dom";
 import { useAuth } from "@/hooks";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 type FormValues = {
   lastName: string;
@@ -18,7 +19,12 @@ export default function Register() {
   const { mutate } = useAuth({ resource: "users" });
 
   const { handleSubmit,register } = useForm<FormValues>()
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = async (data: FormValues) => {
+   const res = await axios.get(`http://localhost:3000/users?email=${data.email}`);
+    if (res.data.length > 0) {
+      alert("Email đã tồn tại!");
+      return;
+    }
     mutate(data);
   }
   

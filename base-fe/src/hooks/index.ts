@@ -59,19 +59,18 @@ export const useList = ({ resource = "products" }: Props) => {
 //   });
 // };
 
-export const useAuth = ({ resource = "register" }: Props) => {
+export const useAuth = ({ resource = "users" }: Props) => {
   const nav = useNavigate();
   return useMutation({
     mutationFn: (values: any) => auth({ resource, values }),
     onSuccess: (data) => {
       alert("Thành công");
-      if (resource === "register") {
+       
+      if (resource === "users") {
         nav("/login");
         return;
       }
-      // Xử lý đăng nhập ở đây nếu cần
-      const accessToken = data.accessToken;
-      localStorage.setItem("token", accessToken);
+     
 
     },
     onError: () => {
