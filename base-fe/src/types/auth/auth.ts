@@ -3,6 +3,11 @@ export interface LoginPayload {
   password: string;
 
 }
+export interface FormValues {
+  email: string;
+  password: string;
+
+}
 
 export interface LoginResponse {
   token: string;
