@@ -3,7 +3,8 @@ import ClientLayout from "./layouts/ClientLayout";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Homeadmin from "./pages/homeadmin";
 
 function App() {
@@ -27,7 +28,10 @@ function App() {
     },
   ]);
 
-  return <div>{router}</div>;
+  return <div>{router}
+      <ToastContainer position="top-right" />
+
+  </div>;
 }
 
 export default App;
