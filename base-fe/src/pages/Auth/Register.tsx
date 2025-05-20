@@ -1,8 +1,27 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { Link } from "react-router-dom";
+import { Link,  } from "react-router-dom";
+import { useAuth } from "@/hooks";
+import { useForm } from "react-hook-form";
+
+type FormValues = {
+  lastName: string;
+  firstName: string;
+  dob: string;
+  gender: string;
+  email: string;
+  password: string;
+};
+
 
 export default function Register() {
+  const { mutate } = useAuth({ resource: "users" });
+
+  const { handleSubmit,register } = useForm<FormValues>()
+  const onSubmit = (data: FormValues) => {
+    mutate(data);
+  }
+  
   return (
     <div className="min-h-screen flex">
       <div className="w-1/2 flex items-center justify-center">
@@ -13,64 +32,64 @@ export default function Register() {
       </div>
 
       <div className="w-1/2 flex items-center justify-center border-l">
-        <form className="w-full max-w-sm space-y-5"
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-sm space-y-5"
         >
-          <input
-            type="text"
-            name="lastName"
-            placeholder="Họ"
-            className="w-full px-4 py-3 bg-gray-100 rounded focus:outline-none"
-            required
-          />
-          <input
-            type="text"
-            name="firstName"
-            placeholder="Tên"
-            className="w-full px-4 py-3 bg-gray-100 rounded focus:outline-none"
-            required
-          />
-          <input
-            type="date"
-            name="dob"
-            placeholder="Ngày sinh"
-            className="w-full px-4 py-3 bg-gray-100 rounded focus:outline-none text-gray-400 "
-            required
-          />
-          <div className="flex items-center space-x-4">
-            <label className="flex items-center">
-              <input
-                type="radio"
-                name="gender"
-                value="male"
-                className="mr-2"
-                required
-              />
-              Nam
-            </label>
-            <label className="flex items-center">
-              <input
-                type="radio"
-                name="gender"
-                value="female"
-                className="mr-2"
-              />
-              Nữ
-            </label>
-          </div>
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            className="w-full px-4 py-3 bg-gray-100 rounded focus:outline-none"
-            required
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Mật khẩu"
-            className="w-full px-4 py-3 bg-gray-100 rounded focus:outline-none"
-            required
-          />
+         <input
+          type="text"
+          {...register("lastName")}
+          placeholder="Họ"
+          className="w-full px-4 py-3 bg-gray-100 rounded focus:outline-none"
+          required
+        />
+        <input
+          type="text"
+          {...register("firstName")}
+          placeholder="Tên"
+          className="w-full px-4 py-3 bg-gray-100 rounded focus:outline-none"
+          required
+        />
+        <input
+          type="date"
+          {...register("dob")}
+          placeholder="Ngày sinh"
+          className="w-full px-4 py-3 bg-gray-100 rounded focus:outline-none text-gray-400 "
+          required
+        />
+        <div className="flex items-center space-x-4">
+          <label className="flex items-center">
+            <input
+              type="radio"
+              {...register("gender")}
+              value="male"
+              className="mr-2"
+              required
+            />
+            Nam
+          </label>
+          <label className="flex items-center">
+            <input
+              type="radio"
+              {...register("gender")}
+              value="female"
+              className="mr-2"
+            />
+            Nữ
+          </label>
+        </div>
+        <input
+          type="email"
+          {...register("email")}
+          placeholder="Email"
+          className="w-full px-4 py-3 bg-gray-100 rounded focus:outline-none"
+          required
+        />
+        <input
+          type="password"
+          {...register("password")}
+          placeholder="Mật khẩu"
+          className="w-full px-4 py-3 bg-gray-100 rounded focus:outline-none"
+          required
+        />
           <div className="flex items-center justify-between">
             <button
               type="submit"

@@ -4,6 +4,18 @@
       "email": "test@example.com",
       "password": "123456",
       "id": 1
+    },
+    {
+      "id": 2
+    },
+    {
+      "lastName": "lâm",
+      "firstName": "đào",
+      "dob": "2025-04-21",
+      "gender": "male",
+      "email": "lam15081999@gmail.com",
+      "password": "123456",
+      "id": 3
     }
   ],
   "products": [],

@@ -59,16 +59,26 @@ export const useList = ({ resource = "products" }: Props) => {
 //   });
 // };
 
-// export const useAuth = ({ resource = "register" }: Props) => {
-//   const nav = useNavigate();
-//   return useMutation({
-//     mutationFn: (values: any) => auth({ resource, values }),
-//     onSuccess: (data) => {
-//       message.success("thanh cong");
-//       if (resource == "register") {
-//         nav("/login");
-//         return;
-//       }
+export const useAuth = ({ resource = "register" }: Props) => {
+  const nav = useNavigate();
+  return useMutation({
+    mutationFn: (values: any) => auth({ resource, values }),
+    onSuccess: (data) => {
+      alert("Thành công");
+      if (resource === "register") {
+        nav("/login");
+        return;
+      }
+      // Xử lý đăng nhập ở đây nếu cần
+      const accessToken = data.accessToken;
+      localStorage.setItem("token", accessToken);
+
+    },
+    onError: () => {
+      alert("Có lỗi xảy ra");
+    },
+  });
+};
      
 
 //       const { accessToken, user } = data;
