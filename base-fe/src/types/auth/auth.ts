@@ -4,9 +4,12 @@ export interface LoginPayload {
 
 }
 export interface FormValues {
+  lastName: string;
+  firstName: string;
+  dob: string;
+  gender: string;
   email: string;
   password: string;
-
 }
 
 export interface LoginResponse {

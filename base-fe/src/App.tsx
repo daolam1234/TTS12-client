@@ -13,7 +13,7 @@ function App() {
       path: "/",
       element: <ClientLayout />,
       children: [
-        { path: "register", element: <Register /> },
+        { path: "auth/register", element: <Register /> },
         { path: "auth/login", element: <Login /> },
 
         // Các route cần phân quyền

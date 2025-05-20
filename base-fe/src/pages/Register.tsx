@@ -1,7 +1,21 @@
-
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
+import type { FormValues } from "@/types/auth/auth";
 
 export default function Register() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>();
+
+  const registerMutation = useAuth({ resource: "register" });
+
+  const onSubmit = (data: FormValues) => {
+    registerMutation.mutate(data);
+  };
+
   return (
     <div className="min-h-screen flex">
       <div className="w-1/2 flex items-center justify-center">
@@ -12,74 +26,82 @@ export default function Register() {
       </div>
 
       <div className="w-1/2 flex items-center justify-center border-l">
-        <form className="w-full max-w-sm space-y-5"
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="w-full max-w-sm space-y-5"
         >
           <input
             type="text"
-            name="lastName"
             placeholder="Họ"
-            className="w-full px-4 py-3 bg-gray-100 rounded focus:outline-none"
-            required
+            {...register("lastName", { required: "Họ là bắt buộc" })}
+            className="w-full px-4 py-3 bg-gray-100 rounded"
           />
+          {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName.message}</p>}
+
           <input
             type="text"
-            name="firstName"
             placeholder="Tên"
-            className="w-full px-4 py-3 bg-gray-100 rounded focus:outline-none"
-            required
+            {...register("firstName", { required: "Tên là bắt buộc" })}
+            className="w-full px-4 py-3 bg-gray-100 rounded"
           />
+          {errors.firstName && <p className="text-red-500 text-sm">{errors.firstName.message}</p>}
+
           <input
             type="date"
-            name="dob"
-            placeholder="Ngày sinh"
-            className="w-full px-4 py-3 bg-gray-100 rounded focus:outline-none text-gray-400 "
-            required
+            {...register("dob", { required: "Ngày sinh là bắt buộc" })}
+            className="w-full px-4 py-3 bg-gray-100 rounded text-gray-400"
           />
+          {errors.dob && <p className="text-red-500 text-sm">{errors.dob.message}</p>}
+
           <div className="flex items-center space-x-4">
             <label className="flex items-center">
               <input
                 type="radio"
-                name="gender"
                 value="male"
+                {...register("gender", { required: "Giới tính là bắt buộc" })}
                 className="mr-2"
-                required
               />
               Nam
             </label>
             <label className="flex items-center">
               <input
                 type="radio"
-                name="gender"
                 value="female"
+                {...register("gender")}
                 className="mr-2"
               />
               Nữ
             </label>
           </div>
+          {errors.gender && <p className="text-red-500 text-sm">{errors.gender.message}</p>}
+
           <input
             type="email"
-            name="email"
             placeholder="Email"
-            className="w-full px-4 py-3 bg-gray-100 rounded focus:outline-none"
-            required
+            {...register("email", { required: "Email là bắt buộc" })}
+            className="w-full px-4 py-3 bg-gray-100 rounded"
           />
+          {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
+
           <input
             type="password"
-            name="password"
             placeholder="Mật khẩu"
-            className="w-full px-4 py-3 bg-gray-100 rounded focus:outline-none"
-            required
+            {...register("password", { required: "Mật khẩu là bắt buộc" })}
+            className="w-full px-4 py-3 bg-gray-100 rounded"
           />
+          {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
+
           <div className="flex items-center justify-between">
             <button
               type="submit"
+              disabled={registerMutation.isLoading}
               className="bg-black text-white px-6 py-3 font-semibold rounded hover:opacity-90"
             >
-              ĐĂNG KÝ
+              {registerMutation.isLoading ? "Đang đăng ký..." : "ĐĂNG KÝ"}
             </button>
-
           </div>
-          <div className="mt-6  ">
+
+          <div className="mt-6">
             <Link to="/" className="flex items-center text-gray-600 hover:text-black transition-colors">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
