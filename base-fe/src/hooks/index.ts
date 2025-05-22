@@ -4,6 +4,7 @@ import { auth, create, deleteOne, getList, getOne, update } from "../providers";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 // import { jwtDecode } from "jwt-decode";
+import { toast } from "react-toastify";
 
 type Props = {
   resource: string;
@@ -59,22 +60,37 @@ export const useList = ({ resource = "products" }: Props) => {
 //   });
 // };
 
-export const useAuth = ({ resource = "users" }: Props) => {
-  const nav = useNavigate();
+
+export const useAuth = ({ resource }: Props) => {
+  const navigate = useNavigate();
+
   return useMutation({
     mutationFn: (values: any) => auth({ resource, values }),
     onSuccess: (data) => {
-      alert("Thành công");
-       
       if (resource === "users") {
-        nav("/login");
+        alert("Đăng ký thành công!");
+        navigate("/login");
         return;
       }
-     
 
+      // Xử lý đăng nhập thành công
+      const { accessToken, user } = data;
+
+      localStorage.setItem("token", accessToken);
+      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("role", user.role ?? "user"); // fallback role nếu không có
+
+     alert("Đăng nhập thành công!");
+
+      // Điều hướng tùy theo role
+      if (user.role === "admin") {
+        navigate("/admin/dashboard");
+      } else {
+        navigate("/");
+      }
     },
-    onError: () => {
-      alert("Có lỗi xảy ra");
+    onError: (error: any) => {
+      alert(error?.message || "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.");
     },
   });
 };

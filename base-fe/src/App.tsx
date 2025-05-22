@@ -3,6 +3,7 @@ import ClientLayout from "./layouts/ClientLayout"
 import Register from "./pages/Auth/Register"
 import Login from "./pages/Auth/Login"
 import Sneakers from "./pages/Products/Sneakers"
+import HomePage from "./pages/Homepage/HomePage"
 
 
 function App() {
@@ -21,6 +22,10 @@ function App() {
           element: <Login/>
         } ,
         {
+          path: 'homepage',
+          element: <HomePage/>
+        }  ,
+        {
           path: 'sneakers',
           element: <Sneakers/>
         }  
@@ -31,6 +36,7 @@ function App() {
   
   return (
     <div>{router}</div>
+    
   )
 }
 

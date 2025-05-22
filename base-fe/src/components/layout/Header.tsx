@@ -1,34 +1,44 @@
+import { SearchIcon, User2Icon } from "lucide-react";
+import { Logo } from "../nav/Logo";
+import { NavigationMenu } from "../nav/NavigationMenu";
+import { FavoriteIcon } from "../Icons/FavoriteIcon";
+import { BagIcon } from "../Icons/BagIcon";
+
 export default function Header() {
     return (
         <div>
-            <div className="bg-black h-10 flex items-center justify-center">
-                <p className="font-Jaini Purva text-white">
-                    12 SNEAKER AUTHENTIC 100% - 128 Đống Đa, Hà Nội
-                </p>
-            </div>
-
-            <header className="flex items-center justify-between px-4 py-3 border-b">
-                <a href="/" className="text-xl font-bold">12 SNEAKER</a>
-                <nav className="space-x-4 hidden md:flex gap-[0.313rem]">
-                    <a href="/sneakers" className="hover:text-blue-600">SNEAKER</a>
-                    <a href="#" className="hover:text-blue-600">SLIDE</a>
-                    <a href="#" className="hover:text-blue-600">BAG</a>
-                    <a href="#" className="hover:text-blue-600">KHUYẾN MÃI</a>
-                    <a href="#" className="hover:text-blue-600">LIÊN HỆ</a>
+            <header className="flex justify-between items-center px-16 py-0 w-full bg-white border-b border-solid border-b-zinc-400 h-[100px] max-md:px-8 max-md:py-0 max-sm:px-4 max-sm:py-0 max-sm:h-[60px]">
+                <Logo />
+                <NavigationMenu />
+                <nav className="flex items-center h-full">
+                    <div className="flex items-center px-5 py-0 h-full  max-md:px-4 max-md:py-0 max-sm:px-2.5 max-sm:py-0">
+                        <div className="flex flex-col justify-center items-center h-[100px] w-[50px] max-sm:w-10 max-sm:h-[60px]">
+                            <SearchIcon />
+                        </div>
+                    </div>
+                    <div className="flex items-center px-5 py-0 h-full  max-md:px-4 max-md:py-0 max-sm:px-2.5 max-sm:py-0">
+                        <div className="flex flex-col justify-center items-center h-[90px] w-[50px] max-sm:w-10 max-sm:h-[60px]">
+                            <FavoriteIcon />
+                        </div>
+                    </div>
+                    <div className="flex items-center px-5 py-0 h-full  max-md:px-4 max-md:py-0 max-sm:px-2.5 max-sm:py-0">
+                        <div className="flex flex-col justify-center items-center h-[100px] w-[50px] max-sm:w-10 max-sm:h-[60px]">
+                            <BagIcon />
+                        </div>
+                    </div>
+                     <div className="flex items-center px-5 py-0 h-full  max-md:px-4 max-md:py-0 max-sm:px-2.5 max-sm:py-0">
+                        <div className="flex flex-col justify-center items-center h-[100px] w-[50px] max-sm:w-10 max-sm:h-[60px]">
+                            <User2Icon />
+                        </div>
+                    </div>
                 </nav>
-                <div className="flex space-x-3">
-                    <a href="">🔍</a>
-                    <a href="">❤️</a>
-                    <a href="/login">👤</a>
-                </div>
             </header>
-            <div className="h-56 w-full overflow-hidden">
-                <img
-                    src="https://theme.hstatic.net/1000383440/1001166005/14/slideshow_1.jpg?v=227"
-                    alt="Banner Sneaker"
-                    className="w-full h-full object-cover"
-                />
-            </div>
+
+            <section className="bg-black text-white   flex justify-center items-center h-[100px] flex-col gap-3 ">
+                <p>Members : Free Shipping on Orders $50+</p>
+                <a href="#" className="hover:underline font-bold">Join now</a>
+            </section>
+
         </div>
 
 

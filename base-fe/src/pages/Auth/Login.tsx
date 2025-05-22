@@ -4,27 +4,23 @@ import { Link } from "react-router-dom";
 import { useAuth } from "@/hooks";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import type { FormValuesLogin } from "@/types/auth/auth";
 
 
-type FormValuesLogin = {
-  email: string;
-  password: string;
-};
-  
+
 export default function Login() {
-const { mutate } = useAuth({ resource: "users" });
+  const {
+    register,
+    handleSubmit,
+    // formState: { errors },
+  } = useForm<FormValuesLogin>();
 
-  const { handleSubmit, register } = useForm<FormValuesLogin>();
- const onSubmit = async (data: FormValuesLogin) => {
-  const res = await axios.get(
-    `http://localhost:3000/users?email=${data.email}&password=${data.password}`
-  );
-  if (res.data.length === 0) {
-    alert("Sai tài khoản hoặc mật khẩu!");
-    return;
-  }
-  mutate(data);
-};
+  const loginMutation = useAuth({ resource: "users" });
+
+  const onSubmit = (data: FormValuesLogin) => {
+    loginMutation.mutate(data);
+  };
+
   return (
    <div className="min-h-screen flex">
       <div className="w-1/2 flex items-center justify-center">
