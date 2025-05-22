@@ -1,45 +1,61 @@
+import ProductCard from "@/components/products/ProductCard";
 import { useList } from "@/hooks";
 
 
 
-const Sneakers = () => {
-  const { data, isLoading, error } = useList({ resource: "products" });
-
-  if (isLoading) return <div className="p-4">Đang tải...</div>;
-  if (error) return <div className="p-4 text-red-500">Lỗi tải dữ liệu</div>;
+export default function Sneakers() {
 
   return (
-    <div className="max-w-[1200px] mx-auto flex gap-6 px-4 py-6">
-      <aside className="w-1/4 hidden md:block">
-        {/* <SidebarProducts/> */}
-      </aside>
-      <div className="flex-1">
-        <h2 className="text-2xl font-bold mb-6 text-center uppercase">Sneaker</h2>
-        <ul className="grid grid-cols-2 md:grid-cols-3 gap-6">
-          {data?.map((item: any) => (
-            <li key={item._id} className="bg-white p-2 flex flex-col items-center text-center">
-              <img
-                src={item.image_url}
-                alt={item.name}
-                className="w-full h-[200px] object-cover rounded"
-              />
-              <h3 className="text-sm mt-2 font-medium line-clamp-2">{item.name}</h3>
-              <div className="text-sm mt-1">
-                <span className="text-red-600 font-semibold mr-2">
-                  {item.sale_price ? item.sale_price.toLocaleString() + "₫" : item.price.toLocaleString() + "₫"}
-                </span>
-                {item.sale_price && (
-                  <span className="line-through text-gray-400 text-xs">
-                    {item.price.toLocaleString()}₫
-                  </span>
-                )}
-              </div>
-            </li>
-          ))}
-        </ul>
+    <div className="py-10">
+      <span className="text-4xl font-extrabold px-10 py-10  sm:text-6xl sm:text-center ">
+        NEW ARIVALS
+      </span>
+
+      <div className="flex justify-between items-center px-10 py-6">
+        {/* Mobile: chỉ hiện 2 nút */}
+        <div className="flex w-full justify-between gap-4 md:hidden">
+          <button className="border px-4 py-2 rounded flex items-center gap-2">
+            Filters (0)
+            <span>∘=∘</span>
+          </button>
+          <button className="border px-4 py-2 rounded flex items-center gap-2">
+            Sort by
+            <span>▼</span>
+          </button>
+        </div>
+
+        {/* Desktop: hiện đủ filter */}
+        <div className="hidden md:flex w-full gap-2 flex-wrap">
+          <button className="border px-4 py-2 rounded flex items-center gap-2">Gender <span>▼</span></button>
+          <button className="border px-4 py-2 rounded flex items-center gap-2">Category <span>▼</span></button>
+          <button className="border px-4 py-2 rounded flex items-center gap-2">Product type <span>▼</span></button>
+          <button className="border px-4 py-2 rounded flex items-center gap-2">Size <span>▼</span></button>
+          <button className="border px-4 py-2 rounded flex items-center gap-2">Prize <span>▼</span></button>
+          <button className="border px-4 py-2 rounded flex items-center gap-2">Color <span>▼</span></button>
+          <button className="border px-4 py-2 rounded flex items-center gap-2">More filters <span>+</span></button>
+          <div className="flex-1" />
+          <button className="border px-4 py-2 rounded flex items-center gap-2">Sort by <span>▼</span></button>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 px-10 sm:grid-cols-2 md:grid-cols-4 gap-6">
+
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+
       </div>
     </div>
+
   );
 };
 
-export default Sneakers;

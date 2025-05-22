@@ -39,7 +39,7 @@ export default function Register() {
   };
   
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex flex-col justify-center items-center gap-10">
       <div className="w-1/2 flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-3xl font-semibold mb-2">Đăng ký</h2>
@@ -116,7 +116,7 @@ export default function Register() {
 
           </div>
           <div className="mt-6  ">
-            <Link to="/" className="flex items-center text-gray-600 hover:text-black transition-colors">
+            <Link to="/homepage" className="flex items-center text-gray-600 hover:text-black transition-colors">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5 mr-2"

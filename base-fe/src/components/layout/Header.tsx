@@ -8,7 +8,7 @@ export default function Header() {
     return (
         <div>
             <header className="flex justify-between items-center px-16 py-0 w-full bg-white border-b border-solid border-b-zinc-400 h-[100px] max-md:px-8 max-md:py-0 max-sm:px-4 max-sm:py-0 max-sm:h-[60px]">
-                <Logo />
+                <a href="/homepage"><Logo /></a>
                 <NavigationMenu />
                 <nav className="flex items-center h-full">
                     <div className="flex items-center px-5 py-0 h-full  max-md:px-4 max-md:py-0 max-sm:px-2.5 max-sm:py-0">
@@ -26,11 +26,11 @@ export default function Header() {
                             <BagIcon />
                         </div>
                     </div>
-                     <div className="flex items-center px-5 py-0 h-full  max-md:px-4 max-md:py-0 max-sm:px-2.5 max-sm:py-0">
+                     <a href="/login" className="flex items-center px-5 py-0 h-full  max-md:px-4 max-md:py-0 max-sm:px-2.5 max-sm:py-0">
                         <div className="flex flex-col justify-center items-center h-[100px] w-[50px] max-sm:w-10 max-sm:h-[60px]">
                             <User2Icon />
                         </div>
-                    </div>
+                    </a>
                 </nav>
             </header>
 

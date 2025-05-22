@@ -5,7 +5,7 @@ import { SlideIndicators } from "../banner/SlideIndicators";
 export default function Banner() {
     return (
         <div>
-            <main className="overflow-hidden relative mx-auto w-full max-w-none h-[750px] max-md:max-w-[991px] max-sm:max-w-screen-sm">
+            <main className="overflow-hidden relative mx-auto w-full max-w-none h-[550px] sm:h-[650px] md:h-[750px] max-md:max-w-[991px] max-sm:max-w-screen-sm">
                 <CircularBackground />
                 <img
                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/25f8addfc91e4cbbb1242155c9b60098c6e0e46e"

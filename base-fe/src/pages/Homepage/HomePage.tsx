@@ -6,7 +6,7 @@ import ProductCard from "@/components/products/ProductCard";
 export default function HomePage() {
     return (
         <div>
-            <div><Header /></div>
+            {/* <div><Header /></div> */}
             <div><Banner /></div>
 
             {/* san pham */}
@@ -153,7 +153,7 @@ export default function HomePage() {
           
 
             {/* footer */}
-            <div><Footer /></div>
+            {/* <div><Footer /></div> */}
         </div>
 
     );

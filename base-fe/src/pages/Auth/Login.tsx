@@ -22,7 +22,7 @@ export default function Login() {
   };
 
   return (
-   <div className="min-h-screen flex">
+   <div className="min-h-screen flex flex-col justify-center items-center gap-10">
       <div className="w-1/2 flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-3xl font-semibold mb-2">Đăng nhập</h2>

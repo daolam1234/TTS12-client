@@ -1,7 +1,7 @@
 export default function Footer() {
     return (
         <div>
-            <footer className="bg-white  px-10 py-10 text-sm ">
+            <footer className="bg-gray-100  px-10 py-10 text-sm ">
                 <div className="grid grid-cols-1 md:grid-cols-4 ">
                     <div className="flex flex-col gap-2">
                         <span className="text-3xl font-bold py-5 ">TRỢ GIÚP</span>
