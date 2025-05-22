@@ -20,21 +20,15 @@ export const useAuth = ({ resource }: Props) => {
         return;
       }
 
-      // Xử lý đăng nhập thành công
+      // Xử lý đăng nhập thành công 
       const { accessToken, user } = data;
 
       localStorage.setItem("token", accessToken);
       localStorage.setItem("user", JSON.stringify(user));
-      localStorage.setItem("role", user.role ?? "user"); // fallback role nếu không có
-
+      localStorage.setItem("role", user.role ?? "user"); 
       toast.success("Đăng nhập thành công!");
-
-      // Điều hướng tùy theo role
-      if (user.role === "admin") {
-        navigate("/admin/dashboard");
-      } else {
-        navigate("/");
-      }
+      navigate("/");
+  
     },
     onError: (error: any) => {
       toast.error(error?.message || "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.");
