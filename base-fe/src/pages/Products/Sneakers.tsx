@@ -40,7 +40,10 @@ export default function Sneakers() {
 
       <div className="grid grid-cols-1 px-10 sm:grid-cols-2 md:grid-cols-4 gap-6">
 
+        
+        <a href="/sneakers/1">
         <ProductCard />
+        </a>
         <ProductCard />
         <ProductCard />
         <ProductCard />

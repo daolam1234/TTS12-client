@@ -4,6 +4,7 @@ import Register from "./pages/Auth/Register"
 import Login from "./pages/Auth/Login"
 import HomePage from "./pages/Homepage/HomePage"
 import Sneakers from "./pages/Products/Sneakers"
+import ProductDetail from "./pages/Products/ProductDetail"
 
 
 function App() {
@@ -28,7 +29,11 @@ function App() {
         {
           path: 'sneakers',
           element: <Sneakers/>
-        }  
+        }  ,
+         {
+          path: 'sneakers/1',
+          element: <ProductDetail/>
+        } 
       ]
     },
    

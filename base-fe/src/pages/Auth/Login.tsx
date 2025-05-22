@@ -49,7 +49,7 @@ export default function Login() {
           className="w-full px-4 py-3 bg-gray-100 rounded focus:outline-none"
           required
         />
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col gap-5 items-center justify-between md:flex-row">
             <button
               type="submit"
               className="bg-black text-white px-6 py-3 font-semibold rounded hover:opacity-90"
