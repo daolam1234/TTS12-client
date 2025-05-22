@@ -3,24 +3,40 @@ import Footer from "@/components/layout/Footer";
 import { Link,  } from "react-router-dom";
 import { useAuth } from "@/hooks";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import type { FormValues } from "@/types/auth/auth";
+import { toast } from "react-toastify";
 
-type FormValues = {
-  lastName: string;
-  firstName: string;
-  dob: string;
-  gender: string;
-  email: string;
-  password: string;
-};
 
 
 export default function Register() {
-  const { mutate } = useAuth({ resource: "users" });
+  const {
+    register,
+    handleSubmit,
+    // formState: { errors },
+  } = useForm<FormValues>();
 
-  const { handleSubmit,register } = useForm<FormValues>()
-  const onSubmit = (data: FormValues) => {
-    mutate(data);
-  }
+  const registerMutation = useAuth({ resource: "users" });
+
+  const onSubmit = async (data: FormValues) => {
+    // if (data.password !== data.confirmPassword) {
+    //   toast.error("Mật khẩu xác nhận không khớp!");
+    //   return;
+    // }
+
+    try {
+      // Kiểm tra email đã tồn tại chưa
+      const res = await axios.get(`http://localhost:3000/users?email=${data.email}`);
+      if (res.data.length > 0) {
+        toast.error("Email đã tồn tại!");
+        return;
+      }
+
+      registerMutation.mutate(data);
+    } catch (error) {
+      toast.error("Lỗi khi kiểm tra email. Vui lòng thử lại.");
+    }
+  };
   
   return (
     <div className="min-h-screen flex">

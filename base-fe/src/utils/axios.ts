@@ -2,7 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const instanceAxios = axios.create({
-  baseURL: "http://localhost:8080/api",
+  baseURL: "http://localhost:8888/api",
   headers: {
     "Content-Type": "application/json",
     "Authorization": "Bearer token"

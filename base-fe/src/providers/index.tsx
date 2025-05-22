@@ -1,15 +1,11 @@
 // API CRUD
 
-import axios from "axios";
+import instanceAxios from "@/utils/axios";
+// import axios from "axios";
 
 const token = localStorage.getItem("token");
 
-const axiosClient = axios.create({
-  baseURL: "http://localhost:3000/",
-  headers: {
-    Authorization: token && `Bearer ${token}`,
-  },
-});
+
 
 type Props = {
   resource: string;
@@ -18,34 +14,34 @@ type Props = {
 };
 
 export const getList = async ({ resource = "products" }) => {
-  const { data } = await axiosClient.get(resource);
+  const { data } = await instanceAxios.get(resource);
   return data;
 };
 
 
 export const getOne = async ({ resource = "products", id }: Props) => {
   if (!id) return;
-  const { data } = await axiosClient.get(`${resource}/${id}`); 
+  const { data } = await instanceAxios.get(`${resource}/${id}`); 
   return data;
 };
 
 export const create = async ({ resource = "products", values }: Props) => {
-  const { data } = await axiosClient.post(resource, values); 
+  const { data } = await instanceAxios.post(resource, values); 
   return data;
 };
 
 export const update = async ({ resource = "products", id, values }: Props) => {
-  const { data } = await axiosClient.put(`${resource}/${id}`, values);
+  const { data } = await instanceAxios.put(`${resource}/${id}`, values);
   return data;
 };
 
 export const deleteOne = async ({ resource = "products", id }: Props) => {
   if (!id) return;
-  const { data } = await axiosClient.delete(`${resource}/${id}`);
+  const { data } = await instanceAxios.delete(`${resource}/${id}`);
   return data;
 };
 
 export const auth = async ({ resource = "register", values }: Props) => {
-  const { data } = await axiosClient.post(resource, values);
+  const { data } = await instanceAxios.post(resource, values);
   return data;
 };

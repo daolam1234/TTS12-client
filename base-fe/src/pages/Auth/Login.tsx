@@ -1,8 +1,26 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Link } from "react-router-dom";
+import { useAuth } from "@/hooks";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import type { FormValuesLogin } from "@/types/auth/auth";
+
+
 
 export default function Login() {
+  const {
+    register,
+    handleSubmit,
+    // formState: { errors },
+  } = useForm<FormValuesLogin>();
+
+  const loginMutation = useAuth({ resource: "users" });
+
+  const onSubmit = (data: FormValuesLogin) => {
+    loginMutation.mutate(data);
+  };
+
   return (
    <div className="min-h-screen flex">
       <div className="w-1/2 flex items-center justify-center">
@@ -14,25 +32,23 @@ export default function Login() {
 
       <div className="w-1/2 flex items-center justify-center border-l">
         <form
-          
+          onSubmit={handleSubmit(onSubmit)}
           className="w-full max-w-sm space-y-5"
         >
           <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            
-            className="w-full px-4 py-3 bg-gray-100 rounded focus:outline-none"
-            required
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Mật khẩu"
-            
-            className="w-full px-4 py-3 bg-gray-100 rounded focus:outline-none"
-            required
-          />
+          type="email"
+          {...register("email")}
+          placeholder="Email"
+          className="w-full px-4 py-3 bg-gray-100 rounded focus:outline-none"
+          required
+        />
+        <input
+          type="password"
+          {...register("password")}
+          placeholder="Mật khẩu"
+          className="w-full px-4 py-3 bg-gray-100 rounded focus:outline-none"
+          required
+        />
           <div className="flex items-center justify-between">
             <button
               type="submit"

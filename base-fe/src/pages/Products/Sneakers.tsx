@@ -1,4 +1,3 @@
-import SidebarProducts from "@/components/layout/SidebarProducts";
 import { useList } from "@/hooks";
 
 
@@ -12,7 +11,7 @@ const Sneakers = () => {
   return (
     <div className="max-w-[1200px] mx-auto flex gap-6 px-4 py-6">
       <aside className="w-1/4 hidden md:block">
-        <SidebarProducts/>
+        {/* <SidebarProducts/> */}
       </aside>
       <div className="flex-1">
         <h2 className="text-2xl font-bold mb-6 text-center uppercase">Sneaker</h2>
