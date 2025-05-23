@@ -3,12 +3,12 @@ import { useList } from "@/hooks";
 
 
 
-export default function Sneakers() {
+export default function Collection() {
 
   return (
     <div className="py-10">
       <span className="text-4xl font-extrabold px-10 py-10  sm:text-6xl sm:text-center ">
-        NEW ARIVALS
+        COLLECTION
       </span>
 
       <div className="flex justify-between items-center px-10 py-6">

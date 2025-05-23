@@ -3,10 +3,15 @@ import ClientLayout from "./layouts/ClientLayout"
 import Register from "./pages/Auth/Register"
 import Login from "./pages/Auth/Login"
 import HomePage from "./pages/Homepage/HomePage"
-import Sneakers from "./pages/Products/Sneakers"
+
 import ProductDetail from "./pages/Products/ProductDetail"
 import Profile from "./pages/User/Profile"
 import Setting from "./pages/User/Setting"
+import NewArrival from "./pages/Products/NewArrival"
+import Men from "./pages/Products/Men"
+import Women from "./pages/Products/Women"
+import Kids from "./pages/Products/Kids"
+import Collection from "./pages/Products/Collections"
 
 
 function App() {
@@ -29,11 +34,27 @@ function App() {
           element: <HomePage />
         },
         {
-          path: 'sneakers',
-          element: <Sneakers />
+          path: 'newArrival',
+          element: <NewArrival />
+        },
+         {
+          path: 'men',
+          element: <Men />
+        },
+         {
+          path: 'women',
+          element: <Women />
+        },
+         {
+          path: 'kids',
+          element: <Kids />
+        },
+         {
+          path: 'collection',
+          element: <Collection />
         },
         {
-          path: 'sneakers/1',
+          path: 'newArrival/1',
           element: <ProductDetail />
         },
         {
