@@ -1,10 +1,12 @@
 export type FormValues = {
-  lastName: string;
-  firstName: string;
-  dob: string;
-  gender: string;
-  email: string;
-  password: string;
+  fullName: string,
+  email: string,
+  password: string,
+  phone: string,
+  avatar: string,
+  token: string,
+  role_id: string,
+  status: string,
 };
 
 

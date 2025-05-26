@@ -7,6 +7,7 @@ import Sneakers from "./pages/Products/Sneakers"
 import ProductDetail from "./pages/Products/ProductDetail"
 import Profile from "./pages/User/Profile"
 import Setting from "./pages/User/Setting"
+import VerifyEmail from "./pages/Auth/VerifyEmail"
 
 
 function App() {
@@ -23,6 +24,10 @@ function App() {
         {
           path: 'login',
           element: <Login />
+        },
+        {
+          path: '/verify-email/:token',
+          element: <VerifyEmail />
         },
         {
           path: 'homepage',

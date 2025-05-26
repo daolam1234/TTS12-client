@@ -1,7 +1,7 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Link,  } from "react-router-dom";
-import { useAuth } from "@/hooks";
+import { useRegister } from "@/hooks";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import type { FormValues } from "@/types/auth/auth";
@@ -16,22 +16,11 @@ export default function Register() {
     // formState: { errors },
   } = useForm<FormValues>();
 
-  const registerMutation = useAuth({ resource: "users" });
+  const registerMutation = useRegister();
 
   const onSubmit = async (data: FormValues) => {
-    // if (data.password !== data.confirmPassword) {
-    //   toast.error("Mật khẩu xác nhận không khớp!");
-    //   return;
-    // }
 
     try {
-      // Kiểm tra email đã tồn tại chưa
-      const res = await axios.get(`http://localhost:3000/users?email=${data.email}`);
-      if (res.data.length > 0) {
-        toast.error("Email đã tồn tại!");
-        return;
-      }
-
       registerMutation.mutate(data);
     } catch (error) {
       toast.error("Lỗi khi kiểm tra email. Vui lòng thử lại.");
@@ -52,46 +41,19 @@ export default function Register() {
         >
          <input
           type="text"
-          {...register("lastName")}
-          placeholder="Họ"
+          {...register("fullName")}
+          placeholder="Họ và tên"
           className="w-full px-4 py-3 bg-gray-100 rounded focus:outline-none"
           required
         />
         <input
           type="text"
-          {...register("firstName")}
-          placeholder="Tên"
+          {...register("phone")}
+          placeholder="Số điện thoại"
           className="w-full px-4 py-3 bg-gray-100 rounded focus:outline-none"
           required
         />
-        <input
-          type="date"
-          {...register("dob")}
-          placeholder="Ngày sinh"
-          className="w-full px-4 py-3 bg-gray-100 rounded focus:outline-none text-gray-400 "
-          required
-        />
-        <div className="flex items-center space-x-4">
-          <label className="flex items-center">
-            <input
-              type="radio"
-              {...register("gender")}
-              value="male"
-              className="mr-2"
-              required
-            />
-            Nam
-          </label>
-          <label className="flex items-center">
-            <input
-              type="radio"
-              {...register("gender")}
-              value="female"
-              className="mr-2"
-            />
-            Nữ
-          </label>
-        </div>
+
         <input
           type="email"
           {...register("email")}
@@ -99,7 +61,7 @@ export default function Register() {
           className="w-full px-4 py-3 bg-gray-100 rounded focus:outline-none"
           required
         />
-        <input
+         <input
           type="password"
           {...register("password")}
           placeholder="Mật khẩu"
