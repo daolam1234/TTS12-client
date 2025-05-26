@@ -61,36 +61,43 @@ export const useList = ({ resource = "products" }: Props) => {
 // };
 
 
-export const useAuth = ({ resource }: Props) => {
+export const useRegister = () => {
   const navigate = useNavigate();
-
   return useMutation({
-    mutationFn: (values: any) => auth({ resource, values }),
+    mutationFn: (values: any) => auth({ resource: "auth/register", values }),
     onSuccess: (data) => {
-      if (resource === "users") {
-        alert("Đăng ký thành công!");
-        navigate("/login");
+      alert("Đăng ký thành công! Vui lòng kiểm tra email để xác thực tài khoản.");
+      navigate(`/verify-email/${data.token}`);
+    },
+    onError: (error: any) => {
+      const message = error?.response?.data?.message || "Đăng ký thất bại. Vui lòng thử lại.";
+      alert(message);
+    },
+  });
+};
+
+export const useLogin = () => {
+  const navigate = useNavigate();
+  return useMutation({
+    mutationFn: (values: any) => auth({ resource: "auth/login", values }),
+    onSuccess: (data) => {
+      const { account, accessToken } = data.data || {};
+      if (!account) {
+        alert("Đăng nhập thất bại: Không tìm thấy thông tin người dùng.");
         return;
       }
-
-      // Xử lý đăng nhập thành công
-      const { accessToken, user } = data;
-
       localStorage.setItem("token", accessToken);
-      localStorage.setItem("user", JSON.stringify(user));
-      localStorage.setItem("role", user.role ?? "user"); // fallback role nếu không có
-
-     alert("Đăng nhập thành công!");
-
-      // Điều hướng tùy theo role
-      if (user.role === "admin") {
+      localStorage.setItem("user", JSON.stringify(account));
+      localStorage.setItem("role", account.admin ? "admin" : "user");
+      alert("Đăng nhập thành công!");
+      if (account.admin) {
         navigate("/admin/dashboard");
       } else {
-        navigate("/");
+        navigate("/homepage");
       }
     },
     onError: (error: any) => {
-      alert(error?.message || "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.");
+      alert(error?.response?.data?.message || "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.");
     },
   });
 };

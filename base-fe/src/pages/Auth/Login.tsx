@@ -1,7 +1,7 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Link } from "react-router-dom";
-import { useAuth } from "@/hooks";
+import { useLogin } from "@/hooks";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import type { FormValuesLogin } from "@/types/auth/auth";
@@ -15,7 +15,7 @@ export default function Login() {
     // formState: { errors },
   } = useForm<FormValuesLogin>();
 
-  const loginMutation = useAuth({ resource: "users" });
+  const loginMutation = useLogin();
 
   const onSubmit = (data: FormValuesLogin) => {
     loginMutation.mutate(data);
