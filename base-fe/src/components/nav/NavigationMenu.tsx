@@ -1,8 +1,8 @@
 import React from "react";
 
-export const NavigationMenu = () => {
+export const NavigationMenu = ({ className = "" }: { className?: string }) => {
   return (
-    <nav className="flex gap-8 items-center max-sm:hidden max-xl:hidden ">
+    <nav className={`flex gap-8 items-center ${className}`}>
       <a href="/sneakers" className="font-bold text-stone-950 md:text-xl hover:underline">
         New arrivals
       </a>
