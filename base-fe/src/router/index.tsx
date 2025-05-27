@@ -1,0 +1,59 @@
+import ClientLayout from "@/layouts/ClientLayout";
+import ForgotPass from "@/pages/Auth/ForgotPass";
+import Login from "@/pages/Auth/Login";
+import Register from "@/pages/Auth/Register";
+import VerifyEmail from "@/pages/Auth/VerifyEmail";
+import HomePage from "@/pages/Homepage/HomePage";
+import ProductDetail from "@/pages/Products/ProductDetail";
+import Sneakers from "@/pages/Products/Sneakers";
+import Profile from "@/pages/User/Profile";
+import Setting from "@/pages/User/Setting";
+import { createBrowserRouter } from "react-router-dom";
+
+
+
+export const router = createBrowserRouter([
+   {
+        path: '/',
+        element: <ClientLayout />,
+        children: [
+          {
+            path: 'register',
+            element: <Register />
+          },
+          {
+            path: 'login',
+            element: <Login />
+          },
+          {
+            path: '/verify-email/:token',
+            element: <VerifyEmail />
+          },
+          {
+            path: '/forgot-password',
+            element: <ForgotPass />
+          },
+          {
+            path: 'homepage',
+            element: <HomePage />
+          },
+          {
+            path: 'sneakers',
+            element: <Sneakers />
+          },
+          {
+            path: 'sneakers/1',
+            element: <ProductDetail />
+          },
+          {
+            path: '/member/profile',
+            element: <Profile />
+          },
+          {
+            path: '/member/settings',
+            element: <Setting />
+          },
+        ]
+      },
+  
+]);

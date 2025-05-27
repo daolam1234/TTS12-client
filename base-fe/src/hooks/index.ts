@@ -66,12 +66,13 @@ export const useRegister = () => {
   return useMutation({
     mutationFn: (values: any) => auth({ resource: "auth/register", values }),
     onSuccess: (data) => {
-      alert("Đăng ký thành công! Vui lòng kiểm tra email để xác thực tài khoản.");
+      toast.success("Đăng ký thành công! Vui lòng kiểm tra email để xác thực tài khoản.");
       navigate(`/verify-email/${data.token}`);
     },
     onError: (error: any) => {
       const message = error?.response?.data?.message || "Đăng ký thất bại. Vui lòng thử lại.";
-      alert(message);
+      toast.error(message);
+      
     },
   });
 };
@@ -83,13 +84,13 @@ export const useLogin = () => {
     onSuccess: (data) => {
       const { account, accessToken } = data.data || {};
       if (!account) {
-        alert("Đăng nhập thất bại: Không tìm thấy thông tin người dùng.");
+        toast.error("Đăng nhập thất bại: Không tìm thấy thông tin người dùng.");
         return;
       }
       localStorage.setItem("token", accessToken);
       localStorage.setItem("user", JSON.stringify(account));
       localStorage.setItem("role", account.admin ? "admin" : "user");
-      alert("Đăng nhập thành công!");
+      toast.success("Đăng nhập thành công!");
       if (account.admin) {
         navigate("/admin/dashboard");
       } else {
@@ -97,7 +98,8 @@ export const useLogin = () => {
       }
     },
     onError: (error: any) => {
-      alert(error?.response?.data?.message || "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.");
+      toast.error(error?.response?.data?.message || "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.");
+      console.log("Login error:", error);
     },
   });
 };
