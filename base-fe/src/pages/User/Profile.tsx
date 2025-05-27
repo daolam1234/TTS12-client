@@ -1,7 +1,7 @@
 import ProductCard from "@/components/products/ProductCard";
 import type { User } from "@/types/user/user";
 import { useEffect, useState } from "react";
-import instanceAxios from "@/utils/axios"; 
+import instanceAxios from "@/utils/axios";
 
 export default function Profile() {
     const [user, setUser] = useState<User | null>(null);
@@ -10,13 +10,16 @@ export default function Profile() {
         async function fetchUser() {
             try {
                 const res = await instanceAxios.get("/user/profile");
-                setUser(res.data.data); 
+                setUser(res.data.data);
             } catch (error) {
                 setUser(null);
             }
         }
         fetchUser();
     }, []);
+
+    
+
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -25,6 +28,7 @@ export default function Profile() {
                 <a href="" className="px-4 py-2 rounded hover:underline ">Order</a>
                 <a href="" className="px-4 py-2 rounded hover:underline ">Favorite</a>
                 <a href="/member/settings" className="px-4 py-2 rounded hover:underline ">Setting</a>
+               
             </div>
             <div className=" gap-8 px-8 py-10 bg-white rounded-xl flex max-sm:flex-col max-sm:justify-center max-sm:items-center">
                 <img

@@ -1,4 +1,16 @@
+import { useNavigate } from "react-router-dom";
+
 export default function Setting() {
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        const confirmLogout = window.confirm("Bạn có chắc chắn muốn đăng xuất?");
+        if (confirmLogout) {
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+            navigate("/login");
+        }
+    };
     return (
         <div>
             <div className="max-w-4xl mx-auto p-6">
@@ -12,6 +24,12 @@ export default function Setting() {
                         />
                         <button className="px-4 py-2 text-sm font-semibold bg-stone-900 text-white rounded-lg hover:bg-stone-700 transition">
                             Change Avatar
+                        </button>
+                        <button
+                            onClick={handleLogout}
+                            className="px-4 py-2 mt-5 text-sm font-semibold bg-red-700 text-white rounded-lg hover:bg-red-700  transition"
+                        >
+                            Logout
                         </button>
                     </div>
 
