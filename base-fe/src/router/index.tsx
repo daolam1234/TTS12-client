@@ -8,7 +8,7 @@ import ProductDetail from "@/pages/Products/ProductDetail";
 import Sneakers from "@/pages/Products/Sneakers";
 import Profile from "@/pages/User/Profile";
 import Setting from "@/pages/User/Setting";
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 
 
 
@@ -17,6 +17,10 @@ export const router = createBrowserRouter([
         path: '/',
         element: <ClientLayout />,
         children: [
+          {
+            path: '',
+            element: <Navigate to="/homepage" replace />
+          },
           {
             path: 'register',
             element: <Register />
