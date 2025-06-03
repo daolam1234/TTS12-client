@@ -73,7 +73,7 @@ export default function ForgotPass() {
                     </div>
                     <button
                         type="submit"
-                        className="w-full border-2 border-black bg-black text-white py-2 rounded hover:bg-white hover:text-black transition"
+                        className="btn"
                         disabled={sendOtpMutation.isPending}
                     >
                         {sendOtpMutation.isPending ? "Đang gửi..." : "Gửi mã OTP"}
@@ -114,7 +114,7 @@ export default function ForgotPass() {
                     </div>
                     <button
                         type="submit"
-                        className="w-full border-2 border-black bg-black text-white py-2 rounded hover:bg-white hover:text-black transition"
+                        className="btn"
                         disabled={resetPasswordMutation.isPending}
                     >
                         {resetPasswordMutation.isPending ? "Đang đặt lại..." : "Đặt lại mật khẩu"}
