@@ -29,15 +29,6 @@ export default function Register() {
 
   return (
     <div className="flex min-h-screen bg-gray-50 max-sm:items-center max-sm:justify-center ">
-
-      <div className="w-1/2 flex justify-center items-center max-sm:hidden">
-        <img
-          src="https://i.pinimg.com/originals/47/67/b8/4767b82fe7c0743c05a19a77e592550c.jpg"
-          alt=""
-          className="object-cover h-full w-full"
-        />
-      </div>
-    
       <div className="w-1/2 flex flex-col justify-center items-center gap-10">
         <div className="w-full flex items-center justify-center">
           <div className="text-center">
@@ -113,6 +104,15 @@ export default function Register() {
           </form>
         </div>
       </div>
+      <div className="w-1/2 flex justify-center items-center max-sm:hidden">
+        <img
+          src="https://i.pinimg.com/originals/47/67/b8/4767b82fe7c0743c05a19a77e592550c.jpg"
+          alt=""
+          className="object-cover h-full w-full"
+        />
+      </div>
+
+
     </div>
 
   );

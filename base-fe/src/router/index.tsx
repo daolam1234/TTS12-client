@@ -3,6 +3,7 @@ import ForgotPass from "@/pages/Auth/ForgotPass";
 import Login from "@/pages/Auth/Login";
 import Register from "@/pages/Auth/Register";
 import VerifyEmail from "@/pages/Auth/VerifyEmail";
+import Contact from "@/pages/Contact/Contact";
 import HomePage from "@/pages/Homepage/HomePage";
 import ProductDetail from "@/pages/Products/ProductDetail";
 import Sneakers from "@/pages/Products/Sneakers";
@@ -20,6 +21,10 @@ export const router = createBrowserRouter([
           {
             path: '',
             element: <Navigate to="/homepage" replace />
+          },
+           {
+            path: 'contact',
+            element: <Contact />
           },
           {
             path: 'register',
