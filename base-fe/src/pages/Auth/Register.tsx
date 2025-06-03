@@ -73,7 +73,7 @@ export default function Register() {
             <div className="flex items-center justify-between">
               <button
                 type="submit"
-                className="bg-black text-white px-6 py-3 font-semibold rounded hover:opacity-90"
+                className="btn"
               >
                 ĐĂNG KÝ
               </button>

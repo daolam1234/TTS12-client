@@ -61,7 +61,7 @@ export default function Login() {
             <div className="flex flex-col gap-5 items-center justify-between ">
               <button
                 type="submit"
-                className="bg-black text-white px-6 py-3 font-semibold rounded hover:opacity-90 w-40"
+                className="btn"
               >
                 ĐĂNG NHẬP
               </button>
