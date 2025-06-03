@@ -32,7 +32,8 @@ export default function Cart() {
     return (
         <div className="bg-white min-h-screen px-4 py-10 ">
             <div className="max-w-5xl mx-auto flex gap-10 max-sm:flex-col ">
-                <div className="w-1/2 max-sm:w-full">
+                <div className="w-1/2 max-sm:w-full mt-6">
+                    <h2 className="text-3xl font-bold mb-10">Shopping Cart</h2>
                     {cartItems.map((item) => (
                         <div key={item.id} className="flex gap-6 border-b pb-6 mb-6">
                             <div>
@@ -69,8 +70,9 @@ export default function Cart() {
                 </div>
 
                 {/* Tổng tiền */}
-                <div className="w-full max-w-sm bg-gray-50 p-6 rounded-xl shadow-sm space-y-3 ml-auto">
-                    <div className="flex justify-between">
+                <div className="w-full max-w-sm bg-gray-50 p-6 rounded-xl shadow-sm space-y-3 ml-auto max-sm:ml-0">
+                    <h2 className="text-3xl font-bold mb-10">Order Summary</h2>
+                    <div className="flex justify-between max-sm:gap-20">
                         <span>Order Subtotal</span>
                         <span>{cartItems[0].salePrice.toLocaleString()}₫</span>
                     </div>
