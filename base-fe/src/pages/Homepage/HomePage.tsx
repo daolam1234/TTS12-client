@@ -15,9 +15,7 @@ export default function HomePage() {
                     <h1 className="text-3xl font-bold max-md:text-4xl">
                         NEW ARRIVALS
                     </h1>
-                    <a href="#" className="my-auto text-xl font-bold underline">
-                        See all items
-                    </a>
+                    
                 </header>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
