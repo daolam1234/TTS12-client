@@ -19,6 +19,9 @@ export const NavigationMenu = ({ className = "" }: { className?: string }) => {
       <a href="#" className="font-bold text-stone-950 md:text-xl hover:underline">
         Collection
       </a>
+      <a href="/contact" className="font-bold text-stone-950 md:text-xl hover:underline">
+        Contact
+      </a>
     </nav>
   );
 };
