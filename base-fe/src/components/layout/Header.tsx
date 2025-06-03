@@ -29,9 +29,9 @@ export default function Header() {
                         </div>
                     </div>
                     <div className="flex items-center px-5 py-0 h-full  max-md:px-4 max-md:py-0 max-sm:px-2.5 max-sm:py-0">
-                        <div className="flex flex-col justify-center items-center h-[28px] w-[33px] max-sm:w-10 max-sm:h-[30px]">
+                        <a href="/cart" className="flex flex-col justify-center items-center h-[28px] w-[33px] max-sm:w-10 max-sm:h-[30px]">
                             <BagIcon />
-                        </div>
+                        </a>
                     </div>
                     <a
                         href={localStorage.getItem("token") ? "/member/profile" : "/login"}
