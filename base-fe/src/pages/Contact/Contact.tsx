@@ -1,6 +1,47 @@
+import { useRegister } from "@/hooks";
+import { contact } from "@/services";
+import type { FormContact } from "@/types/contact/contact.type";
+import { useMutation } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 
 export default function Contact() {
+
+    const useContact = () => {
+        const navigate = useNavigate();
+        return useMutation({
+            mutationFn: (values: any) => contact(values),
+            onSuccess: () => {
+                toast.success("Gửi liên hệ thành công!");
+                navigate("/homepage");
+            },
+            onError: (error: any) => {
+                const message = error?.response?.data?.message || "Gửi liên hệ thất bại. Vui lòng thử lại.";
+                toast.error(message);
+
+            },
+        });
+    };
+
+    const {
+        register,
+        handleSubmit,
+        // formState: { errors },
+    } = useForm<FormContact>();
+
+    const registerMutation = useContact();
+
+    const onSubmit = async (data: FormContact) => {
+        console.log("Dữ liệu gửi đi:", data);
+        try {
+            registerMutation.mutate(data);
+            toast.success("Gửi liên hệ thành công!");
+        } catch (error) {
+            toast.error("Lỗi khi gửi liên hệ. Vui lòng thử lại.");
+        }
+    };
     return (
         <div className="bg-gray-50">
             {/* Banner */}
@@ -25,11 +66,13 @@ export default function Contact() {
 
                 <div className="grid md:grid-cols-2 gap-10">
                     {/* Form */}
-                    <form className="space-y-6 bg-white p-6 rounded-xl shadow">
+                    <form className="space-y-6 bg-white p-6 rounded-xl shadow" onSubmit={handleSubmit(onSubmit)}>
                         <div>
                             <label className="block text-sm font-medium text-gray-700">Họ và tên</label>
                             <input
                                 type="text"
+                                {...register("name")}
+
                                 className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                                 placeholder="Nguyễn Văn A"
                             />
@@ -39,6 +82,8 @@ export default function Contact() {
                             <label className="block text-sm font-medium text-gray-700">Email</label>
                             <input
                                 type="email"
+                                {...register("email")}
+
                                 className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                                 placeholder="email@example.com"
                             />
@@ -47,7 +92,9 @@ export default function Contact() {
                         <div>
                             <label className="block text-sm font-medium text-gray-700">Phone</label>
                             <input
-                                type="tel"
+                                type="text"
+                                {...register("phone")}
+
                                 className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                                 placeholder="0123 456 789"
                             />
@@ -57,6 +104,7 @@ export default function Contact() {
                             <label className="block text-sm font-medium text-gray-700">Nội dung</label>
                             <textarea
                                 rows={4}
+                                {...register("note")}
                                 className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                                 placeholder="Viết tin nhắn..."
                             ></textarea>
@@ -70,7 +118,7 @@ export default function Contact() {
                         </button>
                     </form>
 
-                    {/* Thông tin liên hệ */}
+                    {/* Video */}
                     <div className="space-y-6">
 
                         <div className="rounded-xl overflow-hidden shadow aspect-video">
