@@ -64,7 +64,7 @@ export const router = createBrowserRouter([
         element: <Profile />
       },
       {
-        path: '/member/settings',
+        path: 'member/settings',
         element: <Setting />
       },
     ]

@@ -120,7 +120,14 @@ export default function Contact() {
 
                     {/* Video */}
                     <div className="space-y-6">
-
+                        <div className="flex flex-col ">
+                            <span className="text-lg font-semibold text-gray-800">
+                                CÔNG TY TNHH 12 SNEAKER
+                            </span>
+                            <span>
+                                sdad
+                            </span>
+                        </div>
                         <div className="rounded-xl overflow-hidden shadow aspect-video">
                             <iframe
                                 className="w-full h-full"
@@ -129,10 +136,10 @@ export default function Contact() {
                                 allow="autoplay; encrypted-media"
                                 allowFullScreen
                             ></iframe>
-
                         </div>
-
+                        
                     </div>
+
                 </div>
             </section>
         </div>
