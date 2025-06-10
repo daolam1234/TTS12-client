@@ -1,4 +1,5 @@
 export type Thumbnail = {
+  _id: string;
   url: string;
 };
 

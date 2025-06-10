@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ProductCard from "@/components/products/ProductCard";
 import { useList } from "@/hooks";
 import type { Product } from "@/types/product/product.type";
-import { useSearchParams, useParams } from "react-router-dom";
+import { useSearchParams, useParams, Link } from "react-router-dom";
 
 export default function Sneakers() {
   const { categoryId: paramCategoryId } = useParams(); // Lấy categoryId từ URL
@@ -174,7 +174,9 @@ export default function Sneakers() {
 
       <div className="grid grid-cols-1 px-10 sm:grid-cols-2 md:grid-cols-4 gap-6">
         {data?.map((product: Product) => (
-          <ProductCard key={product._id} product={product} />
+          <Link key={product._id} to={`/products/${product._id}`}>
+            <ProductCard product={product} />
+          </Link>
         ))}
       </div>
 
