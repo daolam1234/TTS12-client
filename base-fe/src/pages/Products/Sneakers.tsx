@@ -6,7 +6,7 @@ import { useSearchParams, useParams } from "react-router-dom";
 
 export default function Sneakers() {
   const { categoryId: paramCategoryId } = useParams(); // Lấy categoryId từ URL
-  
+
   const [searchParams, setSearchParams] = useSearchParams();
   const [categoryId, setCategoryId] = useState<string | null>(null);
 
@@ -36,6 +36,7 @@ export default function Sneakers() {
 
   const [showSizeFilter, setShowSizeFilter] = useState(false);
   const [showPriceFilter, setShowPriceFilter] = useState(false);
+  const [showSortFilter, setShowSortFilter] = useState(false);
 
   const updateFilters = (newFilters: Record<string, any>) => {
     const updatedFilters = { ...filters, ...newFilters };
@@ -52,11 +53,7 @@ export default function Sneakers() {
   };
 
   // Khi chọn category, cập nhật cả state và filter
-  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value || null;
-    setCategoryId(value);
-    updateFilters({ categoryId: value, page: 1 });
-  };
+
 
   // Đảm bảo filters.categoryId luôn đồng bộ với categoryId state
   useEffect(() => {
@@ -85,22 +82,26 @@ export default function Sneakers() {
         </div>
 
         <div className="hidden md:flex w-full gap-2 flex-wrap">
-          <button
+          {/* <button
             className="border px-4 py-2 rounded flex items-center gap-2"
             onClick={() => setShowSizeFilter((v) => !v)}
           >
             Size <span>▼</span>
-          </button>
+          </button> */}
           <button
             className="border px-4 py-2 rounded flex items-center gap-2"
             onClick={() => setShowPriceFilter((v) => !v)}
           >
             Price <span>▼</span>
           </button>
+          <button
+            className="border px-4 py-2 rounded flex items-center gap-2"
+            onClick={() => setShowSortFilter((v) => !v)}
+          >
+            Sort <span>▼</span>
+          </button>
           <div className="flex-1" />
-          {/* <button className="border px-4 py-2 rounded flex items-center gap-2">
-            Sort by <span>▼</span>
-          </button> */}
+
         </div>
       </div>
 
@@ -134,6 +135,29 @@ export default function Sneakers() {
               <button onClick={() => updateFilters({ sort: "price:desc", minPrice: null, maxPrice: null, page: 1 })} className="border px-3 py-1 rounded">
                 Giá giảm dần
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showSortFilter && (
+        <div className="px-10 pb-4">
+          <div className="bg-white border rounded shadow p-4 w-64">
+            <div className="font-bold mb-2">Sắp xếp theo tên</div>
+            <div className="flex flex-col gap-2">
+              <button
+                onClick={() => updateFilters({ sort: "title:asc", minPrice: null, maxPrice: null, page: 1 })}
+                className="border px-3 py-1 rounded"
+              >
+                Tên (A - Z)
+              </button>
+              <button
+                onClick={() => updateFilters({ sort: "title:desc", minPrice: null, maxPrice: null, page: 1 })}
+                className="border px-3 py-1 rounded"
+              >
+                Tên (Z - A)
+              </button>
+
             </div>
           </div>
         </div>
