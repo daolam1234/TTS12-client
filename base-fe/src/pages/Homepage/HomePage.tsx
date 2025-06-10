@@ -4,6 +4,7 @@ import Header from "@/components/layout/Header";
 import ProductCard from "@/components/products/ProductCard";
 import { useList } from "@/hooks";
 import type { Product } from "@/types/product/product.type";
+import { Link } from "react-router-dom";
 
 export default function HomePage() {
     const { data, isLoading, error } = useList({ resource: "products" });
@@ -28,11 +29,13 @@ export default function HomePage() {
                     </h1>
                 </header>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-                    {products.slice(0, 8).map((product: Product) => (
-                        <ProductCard key={product._id} product={product} />
-                    ))}
-                </div>
+                 <div className="grid grid-cols-1 px-10 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                        {data?.slice(0, 8).map((product: Product) => (
+                          <Link key={product._id} to={`/products/${product._id}`}>
+                            <ProductCard product={product} />
+                          </Link>
+                        ))}
+                      </div>
             </section>
 
             {/* dang muc */}
