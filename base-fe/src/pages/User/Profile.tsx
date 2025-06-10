@@ -50,7 +50,7 @@ export default function Profile() {
                         Favourites
                     </h1>
                 </header>
-                <div className="flex gap-6 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 py-4">
+                {/* <div className="flex gap-6 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 py-4">
                     <div className="min-w-[280px] max-w-xs flex-shrink-0">
                         <ProductCard />
                     </div>
@@ -72,7 +72,7 @@ export default function Profile() {
                     <div className="min-w-[280px] max-w-xs flex-shrink-0">
                         <ProductCard />
                     </div>
-                </div>
+                </div> */}
             </section>
         </div>
     )

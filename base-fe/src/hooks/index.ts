@@ -9,21 +9,22 @@ import { toast } from "react-toastify";
 type Props = {
   resource: string;
   id?: number | string;
+  params?: Record<string, any>;
 };
 
-export const useList = ({ resource = "products" }: Props) => {
+export const useList = ({ resource = "products", params = {} }: Props) => {
   return useQuery({
-    queryKey: [resource],
-    queryFn: () => getList({ resource }),
+    queryKey: [resource, params],
+    queryFn: () => getList({ resource, params }),
   });
 };
 
-// export const useOne = ({ resource = "products", id }: Props) => {
-//   return useQuery({
-//     queryKey: [resource, id],
-//     queryFn: () => getOne({ resource, id }),
-//   });
-// };
+export const useOne = ({ resource = "products", id }: Props) => {
+  return useQuery({
+    queryKey: [resource, id],
+    queryFn: () => getOne({ resource, id }),
+  });
+};
 
 // export const useCreate = ({ resource = "products" }: Props) => {
 //   const queryClient = useQueryClient();
