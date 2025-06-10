@@ -2,31 +2,40 @@ import Banner from "@/components/layout/Banner";
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
 import ProductCard from "@/components/products/ProductCard";
+import { useList } from "@/hooks";
+import type { Product } from "@/types/product/product.type";
+import { Link } from "react-router-dom";
 
 export default function HomePage() {
+    const { data, isLoading, error } = useList({ resource: "products" });
+
+    // Lấy đúng mảng sản phẩm từ response
+    const products = data || [];
+
+
+    if (isLoading) return <div>Loading...</div>;
+    if (error) return <div>Error loading products.</div>;
+
     return (
         <div>
             {/* <div><Header /></div> */}
             <div><Banner /></div>
 
             {/* san pham */}
-            <section className=" px-10 py-10">
-                <header className="flex  justify-between  text-neutral-900 ">
+            <section className="px-10 py-10">
+                <header className="flex justify-between text-neutral-900">
                     <h1 className="text-3xl font-bold max-md:text-4xl">
                         NEW ARRIVALS
                     </h1>
-                    
                 </header>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-
-                </div>
-
+                 <div className="grid grid-cols-1 px-10 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                        {data?.slice(0, 8).map((product: Product) => (
+                          <Link key={product._id} to={`/products/${product._id}`}>
+                            <ProductCard product={product} />
+                          </Link>
+                        ))}
+                      </div>
             </section>
 
             {/* dang muc */}
@@ -62,23 +71,23 @@ export default function HomePage() {
             </section>
 
             <section className="px-10 py-10  flex flex-col  items-center ">
-               <div className="py-5 flex flex-col items-center">
-                 <span >
-                    Jordan Air Rev
-                </span>
-                <span className="text-6xl font-extrabold max-md:text-4xl FONTB ">
-                    LOCK IN & LET IT FLY
-                </span>
-                <span >
-                    Perfect for the court or the street
-                </span>
-               </div>
+                <div className="py-5 flex flex-col items-center">
+                    <span >
+                        Jordan Air Rev
+                    </span>
+                    <span className="text-6xl font-extrabold max-md:text-4xl FONTB ">
+                        LOCK IN & LET IT FLY
+                    </span>
+                    <span >
+                        Perfect for the court or the street
+                    </span>
+                </div>
                 <button className="bg-black text-white rounded-full w-20 h-10 ">
                     Shop
                 </button>
             </section>
 
-              {/* trend */}
+            {/* trend */}
             <section className="px-10 py-10">
                 <header className="flex justify-between text-neutral-900">
                     <h1 className="text-3xl font-bold max-md:text-4xl">
@@ -87,27 +96,11 @@ export default function HomePage() {
                 </header>
 
                 <div className="flex gap-6 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 py-4">
-                    <div className="min-w-[280px] max-w-xs flex-shrink-0">
-                        <ProductCard />
-                    </div>
-                    <div className="min-w-[280px] max-w-xs flex-shrink-0">
-                        <ProductCard />
-                    </div>
-                    <div className="min-w-[280px] max-w-xs flex-shrink-0">
-                        <ProductCard />
-                    </div>
-                    <div className="min-w-[280px] max-w-xs flex-shrink-0">
-                        <ProductCard />
-                    </div>
-                    <div className="min-w-[280px] max-w-xs flex-shrink-0">
-                        <ProductCard />
-                    </div>
-                    <div className="min-w-[280px] max-w-xs flex-shrink-0">
-                        <ProductCard />
-                    </div>
-                    <div className="min-w-[280px] max-w-xs flex-shrink-0">
-                        <ProductCard />
-                    </div>
+                    {products.map((product: Product) => (
+                        <div className="min-w-[380px] max-w-xs flex-shrink-0" key={product._id}>
+                            <ProductCard product={product} />
+                        </div>
+                    ))}
                 </div>
             </section>
 
@@ -148,7 +141,7 @@ export default function HomePage() {
                 </div>
             </section>
 
-          
+
 
             {/* footer */}
             {/* <div><Footer /></div> */}

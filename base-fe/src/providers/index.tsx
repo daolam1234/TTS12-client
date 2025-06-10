@@ -1,7 +1,6 @@
 // API CRUD
 
 import instanceAxios from "@/utils/axios";
-// import axios from "axios";
 
 
 
@@ -11,11 +10,17 @@ type Props = {
   resource: string;
   id?: number | string;
   values?: any;
+  params?: Record<string, any>; // Thêm params
 };
 
-export const getList = async ({ resource = "products" }) => {
-  const { data } = await instanceAxios.get(resource);
-  return data;
+export const getList = async ({ resource = "products", params = {} }: Props) => {
+  // Build query string từ params
+  const queryString = params && Object.keys(params).length > 0
+    ? "?" + new URLSearchParams(params).toString()
+    : "";
+  const res = await instanceAxios.get(`${resource}${queryString}`);
+  console.log("res.data:", res.data);
+  return res.data.data.products; // ✅ Trả về mảng sản phẩm
 };
 
 

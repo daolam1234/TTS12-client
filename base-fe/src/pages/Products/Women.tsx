@@ -4,7 +4,7 @@ import { useList } from "@/hooks";
 import type { Product } from "@/types/product/product.type";
 import { useSearchParams, useParams, Link } from "react-router-dom";
 
-export default function Sneakers() {
+export default function Women() {
   const { categoryId: paramCategoryId } = useParams(); // Lấy categoryId từ URL
 
   const [searchParams, setSearchParams] = useSearchParams();
