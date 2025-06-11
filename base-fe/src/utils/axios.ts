@@ -2,11 +2,11 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const instanceAxios = axios.create({
-  baseURL: "http://localhost:8888/api",
+  baseURL: import.meta.env.VITE_API_URL,
+  timeout: 20000,
   headers: {
     "Content-Type": "application/json",
-    // "Authorization": "Bearer token"
-  }
+  },
 })
 
 
