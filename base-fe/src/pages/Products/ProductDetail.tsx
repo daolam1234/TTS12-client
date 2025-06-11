@@ -10,6 +10,8 @@ export default function ProductDetail() {
     const product: Product | undefined = data?.data?.product;
 
     const [thumbnails, setthumbnails] = useState(0);
+    const [selectedSizeIndex, setSelectedSizeIndex] = useState<number | null>(null);
+    const [quantity, setQuantity] = useState(1);
 
     if (isLoading) return <div>Loading...</div>;
     if (!product) return <div>Không tìm thấy sản phẩm</div>;
@@ -58,29 +60,51 @@ export default function ProductDetail() {
                     </p>
 
                     <div className="grid grid-cols-6 gap-2 my-4">
-                        {product.variants?.map((variant) => (
+                        {product.variants?.map((variant, idx) => (
                             <button
                                 key={variant._id}
-                                className={`border rounded py-2 font-semibold ${variant.stock === 0 ? "bg-gray-200 text-gray-400 cursor-not-allowed" : "hover:border-black"}`}
+                                className={`border rounded py-2 font-semibold ${variant.stock === 0 ? "bg-gray-200 text-gray-400 cursor-not-allowed" : "hover:border-black"} ${selectedSizeIndex === idx ? "border-black" : ""}`}
                                 disabled={variant.stock === 0}
+                                onClick={() => setSelectedSizeIndex(idx)}
                             >
                                 {variant.size}
                             </button>
                         ))}
                     </div>
+                    {selectedSizeIndex !== null && (
+                        <div className="mb-2 text-sm text-red-600 font-semibold">
+                            Số lượng còn lại: {product.variants?.[selectedSizeIndex]?.stock}
+                        </div>
+                    )}
 
                     <div className="flex items-center gap-4 mb-2">
                         <div className="flex border rounded">
-                            <button className="px-3 py-2">-</button>
-                            <span className="px-4 py-2">1</span>
-                            <button className="px-3 py-2">+</button>
+                            <button
+                                className="px-3 py-2"
+                                onClick={() => setQuantity(q => Math.max(1, q - 1))}
+                                disabled={quantity <= 1}
+                            >-</button>
+                            <span className="px-4 py-2">{quantity}</span>
+                            <button
+                                className="px-3 py-2"
+                                onClick={() => {
+                                    const maxStock = selectedSizeIndex !== null
+                                        ? product.variants?.[selectedSizeIndex]?.stock ?? 99
+                                        : 99;
+                                    setQuantity(q => Math.min(q + 1, maxStock));
+                                }}
+                                disabled={
+                                    selectedSizeIndex !== null &&
+                                    quantity >= (product.variants?.[selectedSizeIndex]?.stock ?? 99)
+                                }
+                            >+</button>
                         </div>
                         <button className="flex-1 bg-black text-white py-3 rounded font-bold text-lg hover:bg-gray-800 transition">
                             ADD TO CART
                         </button>
                     </div>
                     <button className="flex items-center justify-center border border-black py-3 rounded font-bold text-lg gap-2 hover:bg-gray-100 transition">
-                        <span>♥</span> REMOVE TO THE WISHLIST
+                        <span>♥</span> ADD TO THE WISHLIST
                     </button>
 
 
