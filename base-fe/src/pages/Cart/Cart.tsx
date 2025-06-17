@@ -95,7 +95,7 @@ export default function Cart() {
                 </div>
             </div>
 
-            {/* like */}
+            {/* like
             <section className="px-10 py-10">
                 <header className="flex justify-between text-neutral-900">
                     <h1 className="text-3xl font-bold max-md:text-4xl">
@@ -112,7 +112,7 @@ export default function Cart() {
             </section>
 
             {/* trend */}
-            <section className="px-10 py-10">
+            {/* <section className="px-10 py-10">
                 <header className="flex justify-between text-neutral-900">
                     <h1 className="text-3xl font-bold max-md:text-4xl">
                         TRENDING NOW
@@ -142,7 +142,7 @@ export default function Cart() {
                         <ProductCard />
                     </div>
                 </div>
-            </section>
+            </section> */}
         </div>
     );
 }

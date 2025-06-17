@@ -60,143 +60,136 @@ export default function Sneakers() {
     setFilters({ page, size, minPrice, maxPrice, sort, categoryId });
   }, [page, size, minPrice, maxPrice, sort, categoryId]);
 
+  const handleSortChange = (value: string) => {
+    updateFilters({
+      sort: value,
+      page: 1,
+    });
+  };
+
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error loading products.</div>;
 
   return (
-    <div className="py-10">
-      <span className="text-4xl font-extrabold px-10 py-10 sm:text-6xl sm:text-center">
-        NEW ARRIVALS
-      </span>
+    <div className="flex gap-6 px-10 py-10">
+      {/* === SIDEBAR === */}
+      <div className="w-64 p-4 bg-white rounded-lg shadow space-y-6 border border-gray-200">
+        {/* === FILTER: PRICE ===
+            <div>
+              <h3
+                className="font-semibold mb-2 cursor-pointer flex justify-between items-center"
+                onClick={() => setShowPriceFilter(!showPriceFilter)}
+              >
+                Giá <span>{showPriceFilter ? "▲" : "▼"}</span>
+              </h3>
+              {showPriceFilter && (
+                <div className="space-y-2 pl-1">
+                  {[
+                    { label: "100,000₫ - 1,000,000₫", min: 100000, max: 1000000 },
+                    { label: "1,000,000₫ - 2,000,000₫", min: 1000000, max: 2000000 },
+                    { label: "2,000,000₫ - 4,000,000₫", min: 2000000, max: 4000000 },
+                    { label: "Trên 4,000,000₫", min: 4000000, max: 1000000000 },
+                  ].map((range, index) => (
+                    <label key={index} className="flex items-center gap-2 text-sm">
+                      <input
+                        type="checkbox"
+                        checked={
+                          filters.minPrice === range.min &&
+                          filters.maxPrice === range.max
+                        }
+                        onChange={() => handlePriceChange(range.min, range.max)}
+                      />
+                      {range.label}
+                    </label>
+                  ))}
+                </div>
+              )}
+            </div> */}
 
-      <div className="flex justify-between items-center px-10 py-6">
-        <div className="flex w-full justify-between gap-4 md:hidden">
-          <button className="border px-4 py-2 rounded flex items-center gap-2">
-            Filters (0)
-            <span>∘=∘</span>
-          </button>
-          {/* <button className="border px-4 py-2 rounded flex items-center gap-2">
-            Sort by
-            <span>▼</span>
-          </button> */}
-        </div>
+        {/* === FILTER: SIZE ===
+            <div>
+              <h3
+                className="font-semibold mb-2 cursor-pointer flex justify-between items-center"
+                onClick={() => setShowSizeFilter(!showSizeFilter)}
+              >
+                Size <span>{showSizeFilter ? "▲" : "▼"}</span>
+              </h3>
+              {showSizeFilter && (
+                <div className="space-y-2 pl-1">
+                  {["38", "39", "40", "41", "42"].map((sizeOption) => (
+                    <label key={sizeOption} className="flex items-center gap-2 text-sm">
+                      <input
+                        type="checkbox"
+                        checked={filters.size === sizeOption}
+                        onChange={() => handleSizeToggle(sizeOption)}
+                      />
+                      {sizeOption}
+                    </label>
+                  ))}
+                </div>
+              )}
+            </div> */}
 
-        <div className="hidden md:flex w-full gap-2 flex-wrap">
-          {/* <button
-            className="border px-4 py-2 rounded flex items-center gap-2"
-            onClick={() => setShowSizeFilter((v) => !v)}
+        {/* === SORT OPTIONS === */}
+        <div>
+          <h3
+            className="font-semibold mb-2 cursor-pointer flex justify-between items-center"
+            onClick={() => setShowSortFilter(!showSortFilter)}
           >
-            Size <span>▼</span>
-          </button> */}
-          <button
-            className="border px-4 py-2 rounded flex items-center gap-2"
-            onClick={() => setShowPriceFilter((v) => !v)}
-          >
-            Price <span>▼</span>
-          </button>
-          <button
-            className="border px-4 py-2 rounded flex items-center gap-2"
-            onClick={() => setShowSortFilter((v) => !v)}
-          >
-            Sort <span>▼</span>
-          </button>
-          <div className="flex-1" />
-
-        </div>
-      </div>
-
-      {showSizeFilter && (
-        <div className="px-10 pb-4">
-          <div className="bg-white border rounded shadow p-4 w-64">
-            <div className="font-bold mb-2">Chọn size</div>
-            <div className="flex flex-wrap gap-2">
-              {[23, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43].map((s) => (
-                <button
-                  key={s}
-                  className={`border px-3 py-1 rounded ${filters.size === s ? "bg-gray-200" : ""}`}
-                  onClick={() => updateFilters({ size: filters.size === s ? null : s, page: 1 })}
-                >
-                  {s}
-                </button>
+            Sắp xếp <span>{showSortFilter ? "▲" : "▼"}</span>
+          </h3>
+          {showSortFilter && (
+            <div className="space-y-2 pl-1">
+              {[
+                { label: "Giá tăng dần", value: "price:asc" },
+                { label: "Giá giảm dần", value: "price:desc" },
+                { label: "Tên (A - Z)", value: "title:asc" },
+                { label: "Tên (Z - A)", value: "title:desc" },
+              ].map((option) => (
+                <label key={option.value} className="flex items-center gap-2 text-sm">
+                  <input
+                    type="radio"
+                    name="sort"
+                    checked={filters.sort === option.value}
+                    onChange={() => handleSortChange(option.value)}
+                  />
+                  {option.label}
+                </label>
               ))}
             </div>
-          </div>
+          )}
         </div>
-      )}
-
-      {showPriceFilter && (
-        <div className="px-10 pb-4">
-          <div className="bg-white border rounded shadow p-4 w-64">
-            <div className="font-bold mb-2">Sắp xếp theo giá</div>
-            <div className="flex flex-col gap-2">
-              <button onClick={() => updateFilters({ sort: "price:asc", minPrice: null, maxPrice: null, page: 1 })} className="border px-3 py-1 rounded">
-                Giá tăng dần
-              </button>
-              <button onClick={() => updateFilters({ sort: "price:desc", minPrice: null, maxPrice: null, page: 1 })} className="border px-3 py-1 rounded">
-                Giá giảm dần
-              </button>
-            </div>
-          </div>
+      </div>
+      <div>
+        {/* === PRODUCT LIST === */}
+        <div className="grid grid-cols-1 px-10 sm:grid-cols-2 md:grid-cols-4 gap-6">
+          {data?.map((product: Product) => (
+            <Link key={product._id} to={`/products/${product._id}`}>
+              <ProductCard product={product} />
+            </Link>
+          ))}
         </div>
-      )}
 
-      {showSortFilter && (
-        <div className="px-10 pb-4">
-          <div className="bg-white border rounded shadow p-4 w-64">
-            <div className="font-bold mb-2">Sắp xếp theo tên</div>
-            <div className="flex flex-col gap-2">
-              <button
-                onClick={() => updateFilters({ sort: "title:asc", minPrice: null, maxPrice: null, page: 1 })}
-                className="border px-3 py-1 rounded"
-              >
-                Tên (A - Z)
-              </button>
-              <button
-                onClick={() => updateFilters({ sort: "title:desc", minPrice: null, maxPrice: null, page: 1 })}
-                className="border px-3 py-1 rounded"
-              >
-                Tên (Z - A)
-              </button>
-
-            </div>
-          </div>
+        <div className="flex justify-center items-center gap-4 mt-8">
+          <button
+            className="border px-4 py-2 rounded"
+            onClick={() => updateFilters({ page: Math.max(1, filters.page - 1) })}
+            disabled={filters.page === 1}
+          >
+            Previous
+          </button>
+          <span>Page {filters.page}</span>
+          <button
+            className="border px-4 py-2 rounded"
+            onClick={() => updateFilters({ page: filters.page + 1 })}
+            disabled={data && data.length < limit}
+          >
+            Next
+          </button>
         </div>
-      )}
-
-      {/* <div className="px-10 pb-4">
-        <select onChange={handleCategoryChange} value={categoryId ?? ""}>
-          <option value="">Tất cả</option>
-          <option value="6847265b7287bc6f1dad15ac">Men</option>
-          <option value="68472a4426f919a84b33eb89">Kids</option>
-          <option value="684725e07287bc6f1dad1592">Womens</option>
-        </select>
-      </div> */}
-
-      <div className="grid grid-cols-1 px-10 sm:grid-cols-2 md:grid-cols-4 gap-6">
-        {data?.map((product: Product) => (
-          <Link key={product._id} to={`/products/${product._id}`}>
-            <ProductCard product={product} />
-          </Link>
-        ))}
       </div>
 
-      <div className="flex justify-center items-center gap-4 mt-8">
-        <button
-          className="border px-4 py-2 rounded"
-          onClick={() => updateFilters({ page: Math.max(1, filters.page - 1) })}
-          disabled={filters.page === 1}
-        >
-          Previous
-        </button>
-        <span>Page {filters.page}</span>
-        <button
-          className="border px-4 py-2 rounded"
-          onClick={() => updateFilters({ page: filters.page + 1 })}
-          disabled={data && data.length < limit}
-        >
-          Next
-        </button>
-      </div>
+
     </div>
   );
 }

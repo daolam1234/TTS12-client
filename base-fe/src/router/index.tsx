@@ -4,14 +4,12 @@ import Login from "@/pages/Auth/Login";
 import Register from "@/pages/Auth/Register";
 import VerifyEmail from "@/pages/Auth/VerifyEmail";
 import Cart from "@/pages/Cart/Cart";
+import CategoryPage from "@/pages/CategoryPage/CategoryPage";
 import Contact from "@/pages/Contact/Contact";
 import HomePage from "@/pages/Homepage/HomePage";
-import Kids from "@/pages/Products/Kids";
-import Men from "@/pages/Products/Men";
 import ProductDetail from "@/pages/Products/ProductDetail";
 import Sale from "@/pages/Products/Sale";
 import Sneakers from "@/pages/Products/Sneakers";
-import Women from "@/pages/Products/Women";
 import Profile from "@/pages/User/Profile";
 import Setting from "@/pages/User/Setting";
 import { createBrowserRouter, Navigate } from "react-router-dom";
@@ -58,20 +56,13 @@ export const router = createBrowserRouter([
       {
         path: 'sneakers',
         element: <Sneakers />
-      },{
-        path: 'men',
-        element: <Men/>
-      },{
-        path: 'women',
-        element: <Women />
-      },{
+      }, {
+        path: 'category/:id',
+        element: <CategoryPage />
+      }, {
         path: 'sale',
         element: <Sale />
-      },{
-        path: 'kids',
-        element: <Kids />
       },
-      
       {
         path: 'products/:id',
         element: <ProductDetail />

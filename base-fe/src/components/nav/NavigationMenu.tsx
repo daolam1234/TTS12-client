@@ -7,13 +7,13 @@ export const NavigationMenu = ({ className = "" }: { className?: string }) => {
       <a href="/sneakers" className="font-bold text-stone-950 md:text-xl hover:underline">
         New arrivals
       </a>
-      <a href="/men" className="font-bold text-stone-950 md:text-xl hover:underline">
+      <a href="/category/684725e07287bc6f1dad1592" className="font-bold text-stone-950 md:text-xl hover:underline">
         Men
       </a>
-      <a href="/women" className="font-bold text-stone-950 md:text-xl hover:underline">
+      <a href="/category/6847265b7287bc6f1dad15ac" className="font-bold text-stone-950 md:text-xl hover:underline">
         Women
       </a>
-      <a href="/kids" className="font-bold text-stone-950 md:text-xl hover:underline">
+      <a href="/category/68472a4426f919a84b33eb89" className="font-bold text-stone-950 md:text-xl hover:underline">
         Kids
       </a>
       <a href="/sale" className="font-bold text-stone-950 md:text-xl hover:underline">
