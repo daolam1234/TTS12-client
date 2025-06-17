@@ -6,10 +6,10 @@ export const addToCart = async (data: AddCart) => {
   const res = await instanceAxios.post("cart/add", data);
   return res.data;
 };
+
 export const getCart = async () => {
   const res = await instanceAxios.get("cart");
-  return res.data.data; // Trả về { products, totalPrice }
-
+  return res.data.data; // Trả về populatedCart object
 };
 
 export async function updateCartItem(data: {
@@ -23,19 +23,19 @@ export async function updateCartItem(data: {
     throw new Error(res.data.message || "Failed to update cart item");
   }
 
-  return res.data.data;
+  return res.data.data; // Trả về populatedCart object
 }
 
 export async function removeFromCart(data: {
   product_id: string;
   variant_id: string;
 }) {
-  const res = await instanceAxios.delete("/cart/remove", { data });
+  const res = await instanceAxios.delete("/cart/delete", { data });
 
   if (!res.data.success) {
     throw new Error(res.data.message || "Failed to remove cart item");
   }
 
-  return res.data.data;
+  return res.data.data; // Trả về populatedCart object
 }
 
