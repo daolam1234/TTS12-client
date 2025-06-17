@@ -1,5 +1,5 @@
 import { useRegister } from "@/hooks";
-import { contact } from "@/services";
+import { contact } from "@/services/contactService";
 import type { FormContact } from "@/types/contact/contact.type";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";

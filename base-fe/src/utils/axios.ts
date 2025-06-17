@@ -6,9 +6,18 @@ const instanceAxios = axios.create({
   timeout: 20000,
   headers: {
     "Content-Type": "application/json",
+    
   },
 })
 
+// // 🟢 Thêm đoạn này ngay sau khi tạo instanceAxios:
+// instanceAxios.interceptors.request.use((config) => {
+//   const token = localStorage.getItem("token");
+//   if (token) {
+//     config.headers.Authorization = `Bearer ${token}`;
+//   }
+//   return config;
+// });
 
 // Add a request interceptor
 instanceAxios.interceptors.request.use(function (config) {

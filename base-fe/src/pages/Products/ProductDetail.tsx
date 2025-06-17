@@ -1,20 +1,73 @@
 import ProductCard from "@/components/products/ProductCard";
 import { useOne } from "@/hooks";
-import type { Product } from "@/types/product/product.type";
-import { useParams } from "react-router-dom";
+import type { Product, Variant } from "@/types/product/product.type";
+import { useNavigate, useParams } from "react-router-dom";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
+import { addToCart } from "@/services/cartService";
 
 export default function ProductDetail() {
     const { id } = useParams();
     const { data, isLoading } = useOne({ resource: "products", id });
     const product: Product | undefined = data?.data?.product;
-
+    const navigate = useNavigate();
     const [thumbnails, setthumbnails] = useState(0);
     const [selectedSizeIndex, setSelectedSizeIndex] = useState<number | null>(null);
     const [quantity, setQuantity] = useState(1);
 
+
+
     if (isLoading) return <div>Loading...</div>;
     if (!product) return <div>Không tìm thấy sản phẩm</div>;
+
+
+    const handleAddToCart = async () => {
+        if (selectedSizeIndex === null) {
+            alert("Vui lòng chọn size trước khi thêm vào giỏ hàng.");
+            return;
+        }
+
+        const selectedVariant = product.variants?.[selectedSizeIndex];
+
+        if (!selectedVariant) {
+            alert("Không tìm thấy phiên bản sản phẩm.");
+            return;
+        }
+
+        const token = localStorage.getItem("token");
+        const user = localStorage.getItem("user");
+
+        if (!token || !user) {
+            toast.error("Vui lòng đăng nhập để thêm vào giỏ hàng.", {
+
+            });
+            setTimeout(() => navigate("/login"), 2000);
+            return;
+        }
+        try {
+            const res = await addToCart({
+                product_id: product._id,
+                variant_id: selectedVariant._id,
+                quantity,
+            });
+
+            if (res.success) {
+                toast.success("Sản phẩm đã được thêm vào giỏ hàng!", {
+
+                });
+                console.log("📦 Giỏ hàng sau khi thêm:", res.data.products);
+                setTimeout(() => navigate("/cart"), 1000)
+            } else {
+                toast.error(res.message || "Thêm giỏ hàng thất bại.", {
+                });
+            }
+        } catch (err: any) {
+            const msg = err?.response?.data?.message || "Có lỗi xảy ra khi thêm vào giỏ.";
+            toast.error(msg, {
+            });
+            console.error("❌ Lỗi khi thêm vào giỏ hàng:", err);
+        }
+    };
 
     return (
 
@@ -45,7 +98,7 @@ export default function ProductDetail() {
 
                 <div className="flex-1 flex flex-col gap-4">
                     <span className="text-sm text-gray-500">
-                        {typeof product.product_category_id === "object"
+                        {product.product_category_id && typeof product.product_category_id === "object"
                             ? product.product_category_id.title
                             : "Danh mục"}
                     </span>
@@ -99,7 +152,10 @@ export default function ProductDetail() {
                                 }
                             >+</button>
                         </div>
-                        <button className="flex-1 bg-black text-white py-3 rounded font-bold text-lg hover:bg-gray-800 transition">
+                        <button
+                            onClick={handleAddToCart}
+                            className="flex-1 bg-black text-white py-3 rounded font-bold text-lg hover:bg-gray-800 transition"
+                        >
                             ADD TO CART
                         </button>
                     </div>

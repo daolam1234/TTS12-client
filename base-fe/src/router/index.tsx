@@ -4,6 +4,7 @@ import Login from "@/pages/Auth/Login";
 import Register from "@/pages/Auth/Register";
 import VerifyEmail from "@/pages/Auth/VerifyEmail";
 import Cart from "@/pages/Cart/Cart";
+
 import CategoryPage from "@/pages/CategoryPage/CategoryPage";
 import Contact from "@/pages/Contact/Contact";
 import HomePage from "@/pages/Homepage/HomePage";

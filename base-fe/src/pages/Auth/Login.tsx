@@ -27,7 +27,7 @@ export default function Login() {
         <img
           src="https://i.pinimg.com/originals/47/67/b8/4767b82fe7c0743c05a19a77e592550c.jpg"
           alt=""
-          className="object-cover h-full w-full"
+          className="object-cover h-full w-full"    
         />
       </div>
       <div className="w-1/2 flex flex-col justify-center items-center gap-10">
