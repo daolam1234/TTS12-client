@@ -6,6 +6,7 @@ import VerifyEmail from "@/pages/Auth/VerifyEmail";
 import Cart from "@/pages/Cart/Cart";
 
 import CategoryPage from "@/pages/CategoryPage/CategoryPage";
+import Checkout from "@/pages/Checkout/Checkout";
 import Contact from "@/pages/Contact/Contact";
 import HomePage from "@/pages/Homepage/HomePage";
 import ProductDetail from "@/pages/Products/ProductDetail";
@@ -57,12 +58,18 @@ export const router = createBrowserRouter([
       {
         path: 'sneakers',
         element: <Sneakers />
-      }, {
+      },
+      {
         path: 'category/:id',
         element: <CategoryPage />
-      }, {
+      },
+      {
         path: 'sale',
         element: <Sale />
+      },
+      {
+        path: 'checkout',
+        element: <Checkout />
       },
       {
         path: 'products/:id',

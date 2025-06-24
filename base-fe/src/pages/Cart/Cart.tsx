@@ -1,8 +1,10 @@
 // src/pages/Cart/Cart.tsx
 import { useEffect } from "react";
 import { useCartActions } from "@/hooks";
+import { useNavigate } from "react-router-dom";
 
 export default function Cart() {
+    const navigate = useNavigate();
     const {
         totalPrice,
         cartItems,
@@ -120,7 +122,7 @@ export default function Cart() {
                             <span>Order Total</span>
                             <span>{totalPrice.toLocaleString()}₫</span>
                         </div>
-                        <button className="btn w-full mt-4">Checkout →</button>
+                        <button className="btn w-full mt-4" onClick={() => navigate('/checkout')}>Checkout →</button>
                     </div>
                 )}
             </div>
