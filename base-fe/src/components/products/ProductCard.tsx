@@ -15,10 +15,14 @@ export default function ProductCard({ product }: Props) {
         className="w-full h-48 object-cover rounded"
       />
 
-      <h2 className="text-lg font-semibold mt-2">{product.title}</h2>
+      <h2 className="font-semibold mt-2 text-base line-clamp-2 min-h-[3rem]">
+        {product.title}
+      </h2>
+
       <p className="text-neutral-700">
         {product.price?.toLocaleString("vi-VN")} ₫
       </p>
     </div>
+
   );
 }
