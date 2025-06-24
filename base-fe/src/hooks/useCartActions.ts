@@ -47,12 +47,9 @@ export const useCartActions = () => {
         if (newQuantity < 1) {
             const item = cartItems.find(item => item.variantId === variantId);
             if (item) {
-                const isConfirmed = window.confirm(
-                    `Bạn có muốn xóa "${item.title}" khỏi giỏ hàng?`
-                );
-                if (isConfirmed) {
+               
                     handleRemoveItem(variantId, productId);
-                }
+                
             }
             return;
         }

@@ -105,18 +105,8 @@ export default function Cart() {
                 {!loading && cartItems.length > 0 && (
                     <div className="w-full max-w-sm bg-gray-50 p-6 rounded-xl shadow-sm space-y-3 ml-auto max-sm:ml-0">
                         <h2 className="text-3xl font-bold mb-10">Order Summary</h2>
-                        <div className="flex justify-between">
-                            <span>Order Subtotal</span>
-                            <span>{totalPrice.toLocaleString()}₫</span>
-                        </div>
-                        <div className="flex justify-between">
-                            <span>Sales Tax</span>
-                            <span>0₫</span>
-                        </div>
-                        <div className="flex justify-between">
-                            <span>Shipping</span>
-                            <span>0₫</span>
-                        </div>
+                        
+                        
                         <hr />
                         <div className="flex justify-between font-semibold text-lg">
                             <span>Order Total</span>
