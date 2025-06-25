@@ -10,11 +10,15 @@ import { useCheckout } from '@/hooks/useCheckout';
 import { createOrder } from '@/services/orderServicets';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { clearCart as clearCartApi } from '@/services/cartService';
 
 
 export default function Checkout() {
+
+  
   const navigate = useNavigate();
-  const { cartItems } = useCartStore();
+  const { cartItems, clearCart } = useCartStore();
+
   const {
     checkoutData,
     setCheckoutData,
@@ -42,6 +46,11 @@ export default function Checkout() {
       console.log("Dữ liệu gửi đi:", checkoutData);
       const response = await createOrder(checkoutData);
       console.log("Phản hồi từ server:", response.data);
+  
+      // ✅ Clear giỏ hàng cả trên server lẫn local
+      await clearCartApi();   // Gọi API xoá cart backend
+      clearCart();            // Xoá local cart store
+  
       toast.success('Đặt hàng thành công');
       navigate('/homepage');
     } catch (error) {
@@ -49,6 +58,7 @@ export default function Checkout() {
       toast.error('Đặt hàng thất bại');
     }
   };
+  
 
 
   return (

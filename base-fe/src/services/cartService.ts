@@ -39,3 +39,7 @@ export async function removeFromCart(data: {
   return res.data.data; // Trả về populatedCart object
 }
 
+export const clearCart = async () => {
+  const res = await instanceAxios.delete("/cart/clearCart");
+  return res.data;
+};    

@@ -95,6 +95,8 @@ export const useCartActions = () => {
             });
     };
 
+
+    
     const debouncedUpdate = (variantId: string, productId: string, newQuantity: number) => {
         const existingTimeout = updateTimeouts.current.get(variantId);
         if (existingTimeout) {
