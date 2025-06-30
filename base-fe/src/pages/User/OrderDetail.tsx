@@ -2,7 +2,7 @@ import { useOrderDetail } from "@/hooks/useOrder";
 import type { OrderStatus } from "@/types/order/order.type";
 
 export default function OrderDetail() {
-  const { order, loading, cancelLoading, handleCancelOrder, getStatusStyle } = useOrderDetail();
+  const { order, loading, cancelLoading, handleCancelOrder } = useOrderDetail();
 
   return (
     <div className="min-h-screen bg-gray-50">
