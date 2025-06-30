@@ -13,6 +13,7 @@ import ProductDetail from "@/pages/Products/ProductDetail";
 import Sale from "@/pages/Products/Sale";
 import Sneakers from "@/pages/Products/Sneakers";
 import Orders from "@/pages/User/Order";
+import OrderDetail from "@/pages/User/OrderDetail";
 import Profile from "@/pages/User/Profile";
 import Setting from "@/pages/User/Setting";
 import { createBrowserRouter, Navigate } from "react-router-dom";
@@ -83,6 +84,10 @@ export const router = createBrowserRouter([
       {
         path: '/member/orders',
         element: <Orders />
+      },
+      {
+        path: '/member/orders/:id',
+        element: <OrderDetail />
       },
       {
         path: 'member/settings',

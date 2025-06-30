@@ -24,7 +24,7 @@ export default function Orders() {
     switch (status) {
       case "pending":
         return "bg-yellow-100 text-yellow-700";
-      case "shipping":
+      case "shipped":
         return "bg-blue-100 text-blue-700";
       case "completed":
         return "bg-green-100 text-green-700";
@@ -78,37 +78,13 @@ export default function Orders() {
                       >
                         Trạng thái: {order.status}
                       </span>
+                      <button className="ml-4 px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
+                        <a href={`/member/orders/${order._id}`}>Xem chi tiết</a>
+                      </button>
                     </div>
                   </div>
 
-                  {/* Shipping Info */}
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <div className="font-medium text-neutral-700">
-                      Địa chỉ nhận hàng
-                    </div>
-                    <div className="text-sm text-gray-600">
-                      {order.shippingAddress.fullName} -{" "}
-                      {order.shippingAddress.phone}
-                    </div>
-                    <div className="text-sm text-gray-600">
-                      {order.shippingAddress.addressLine},{" "}
-                      {order.shippingAddress.ward},{" "}
-                      {order.shippingAddress.district},{" "}
-                      {order.shippingAddress.province}
-                    </div>
-                    <div className="mt-1 text-sm text-gray-600">
-                      Giao hàng:{" "}
-                      <span className="font-medium">
-                        {order.shippingMethod.name}
-                      </span>{" "}
-                      ({order.shippingMethod.fee.toLocaleString()}₫) - Thanh
-                      toán:{" "}
-                      <span className="font-medium">
-                        {order.payment_method.toUpperCase()}
-                      </span>
-                    </div>
-                  </div>
-
+                  
                   {/* Product List */}
                   <div>
                     <div className="font-medium mb-2">Sản phẩm</div>

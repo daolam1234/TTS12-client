@@ -56,7 +56,7 @@ export default function ProductDetail() {
 
                 });
                 console.log("📦 Giỏ hàng sau khi thêm:", res.data.products);
-                setTimeout(() => navigate("/cart"), 1000)
+             
             } else {
                 toast.error(res.message || "Thêm giỏ hàng thất bại.", {
                 });
