@@ -24,8 +24,8 @@ export default function Profile() {
     return (
         <div className="min-h-screen bg-gray-50">
             <div className="flex  py-10 md:px-8 text-xl font-bold max-sm:justify-center max-sm:items-center ">
-                <a href="" className="px-4 py-2 rounded hover:underline ">Profile</a>
-                <a href="" className="px-4 py-2 rounded hover:underline ">Order</a>
+                <a href="/member/profile" className="px-4 py-2 rounded hover:underline ">Profile</a>
+                <a href="/member/orders" className="px-4 py-2 rounded hover:underline ">Order</a>
                 <a href="" className="px-4 py-2 rounded hover:underline ">Favorite</a>
                 <a href="/member/settings" className="px-4 py-2 rounded hover:underline ">Setting</a>
                
@@ -44,36 +44,6 @@ export default function Profile() {
                 </div>
             </div>
 
-            <section className="px-10 py-10">
-                <header className="flex justify-between text-neutral-900">
-                    <h1 className="text-3xl font-bold max-md:text-4xl">
-                        Favourites
-                    </h1>
-                </header>
-                {/* <div className="flex gap-6 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 py-4">
-                    <div className="min-w-[280px] max-w-xs flex-shrink-0">
-                        <ProductCard />
-                    </div>
-                    <div className="min-w-[280px] max-w-xs flex-shrink-0">
-                        <ProductCard />
-                    </div>
-                    <div className="min-w-[280px] max-w-xs flex-shrink-0">
-                        <ProductCard />
-                    </div>
-                    <div className="min-w-[280px] max-w-xs flex-shrink-0">
-                        <ProductCard />
-                    </div>
-                    <div className="min-w-[280px] max-w-xs flex-shrink-0">
-                        <ProductCard />
-                    </div>
-                    <div className="min-w-[280px] max-w-xs flex-shrink-0">
-                        <ProductCard />
-                    </div>
-                    <div className="min-w-[280px] max-w-xs flex-shrink-0">
-                        <ProductCard />
-                    </div>
-                </div> */}
-            </section>
         </div>
     )
 }
