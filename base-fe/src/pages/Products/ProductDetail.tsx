@@ -19,19 +19,22 @@ export default function ProductDetail() {
     const [isWishlisted, setIsWishlisted] = useState(false);
 
     useEffect(() => {
-        const checkWishlist = async () => {
-            const token = localStorage.getItem("token");
-            if (!token || !product?._id) return;
-            try {
-                const res = await instanceAxios.get("/wishlist");
-                const wishlist = res.data.data || [];
-                setIsWishlisted(wishlist.some((p: any) => p._id === product._id));
-            } catch {
-                setIsWishlisted(false);
-            }
-        };
-        checkWishlist();
-    }, [product?._id]);
+  const checkWishlist = async () => {
+    const token = localStorage.getItem("token");
+    if (!token || !product?._id) return;
+    try {
+      const res = await instanceAxios.get("/wishlist", {
+        skipErrorHandler: true,
+      });
+      const wishlist = res.data.data || [];
+      setIsWishlisted(wishlist.some((p: any) => p._id === product._id));
+    } catch {
+      setIsWishlisted(false);
+    }
+  };
+  checkWishlist();
+}, [product?._id]);
+
 
 
 

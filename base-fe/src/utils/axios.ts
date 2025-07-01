@@ -1,6 +1,13 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
+// ✅ Mở rộng AxiosRequestConfig để thêm skipErrorHandler
+declare module 'axios' {
+  export interface AxiosRequestConfig {
+    skipErrorHandler?: boolean;
+  }
+}
+
 const instanceAxios = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   timeout: 20000,
@@ -44,8 +51,11 @@ instanceAxios.interceptors.response.use(function (response) {
     instanceAxios.defaults.headers.common['Authorization'] = 'Bearer ' + newToken;
     return instanceAxios(originalRequest);
   }
-  toast.error(error.response?.data?.message)
-  return Promise.reject(error);
+  // ✅ Nếu không có skipErrorHandler thì mới hiện toast
+    if (!originalRequest?.skipErrorHandler) {
+      const message = error.response?.data?.message || "Có lỗi xảy ra";
+      toast.error(message);
+    }
 });
 
 const refreshToken = async () => {
