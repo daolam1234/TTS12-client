@@ -168,10 +168,36 @@ export default function ProductDetail() {
 
 
             </div>
+            {/* Phần đánh giá sản phẩm */}
+            <section className="px-10 py-20">
+                <h2 className="text-3xl font-bold max-md:text-4xl">ĐÁNH GIÁ SẢN PHẨM</h2>
+                {data?.data?.productReview && data.data.productReview.length > 0 ? (
+                    <div className="space-y-4">
+                        {data.data.productReview.map((review: any, idx: number) => (
+                            <div key={review._id || idx} className="border rounded p-4 bg-gray-50">
+                                <div className="flex items-center gap-2 mb-1">
+                                    <span className="font-semibold">{review.user_id?.fullName || "Người dùng"}</span>
+                                    <span className="text-yellow-400">
+                                        {"★".repeat(review.rating)}
+                                        {"☆".repeat(5 - review.rating)}
+                                    </span>
+                                </div>
+                                <div className="text-gray-700">{review.comment}</div>
+                                <div className="text-xs text-gray-400 mt-1">
+                                    {review.createdAt ? new Date(review.createdAt).toLocaleString() : ""}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <div className="text-gray-500">Chưa có đánh giá nào cho sản phẩm này.</div>
+                )}
+            </section>
+
             <section className="px-10 py-10">
                 <header className="flex justify-between text-neutral-900">
                     <h1 className="text-3xl font-bold max-md:text-4xl">
-                        YOU MAY ALSO LIKE
+                        BẠN CÓ THỂ THÍCH
                     </h1>
                 </header>
 
