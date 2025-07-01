@@ -1,8 +1,30 @@
 import { useOrderDetail } from "@/hooks/useOrder";
 import type { OrderStatus } from "@/types/order/order.type";
+import { useState } from "react";
+import {
+  ClockIcon,
+  CheckCircleIcon,
+  TruckIcon,
+  CubeIcon,
+  XCircleIcon,
+} from "@heroicons/react/24/outline";
 
 export default function OrderDetail() {
-  const { order, loading, cancelLoading, handleCancelOrder } = useOrderDetail();
+  const {
+    order,
+    loading,
+    reviewLoading,
+    cancelLoading,
+    handleCancelOrder,
+    handleSubmitReview,
+  } = useOrderDetail();
+  const [reviewModal, setReviewModal] = useState<{
+    open: boolean;
+    productId: string | null;
+    productName: string;
+  }>({ open: false, productId: null, productName: "" });
+  const [rating, setRating] = useState(5);
+  const [comment, setComment] = useState("");
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -46,18 +68,32 @@ export default function OrderDetail() {
                   Ngày đặt: {new Date(order.createdAt).toLocaleString()}
                 </p>
               </div>
-             
             </div>
 
             {/* Progress Step */}
             {(() => {
-              const steps: { key: OrderStatus; label: string; icon: string }[] =
-                [
-                  { key: "pending", label: "Chờ xác nhận", icon: "🕓" },
-                  { key: "confirmed", label: "Đã xác nhận", icon: "✅" },
-                  { key: "shipped", label: "Đang giao", icon: "🚚" },
-                  { key: "delivered", label: "Đã giao", icon: "📦" },
-                ];
+              const steps = [
+                {
+                  key: "pending",
+                  label: "Chờ xác nhận",
+                  icon: <ClockIcon className="w-5 h-5" />,
+                },
+                {
+                  key: "confirmed",
+                  label: "Đã xác nhận",
+                  icon: <CheckCircleIcon className="w-5 h-5" />,
+                },
+                {
+                  key: "shipped",
+                  label: "Đang giao",
+                  icon: <TruckIcon className="w-5 h-5" />,
+                },
+                {
+                  key: "delivered",
+                  label: "Đã giao",
+                  icon: <CubeIcon className="w-5 h-5" />,
+                },
+              ];
 
               const currentStepIndex = steps.findIndex(
                 (s) => s.key === order.status
@@ -111,7 +147,8 @@ export default function OrderDetail() {
                     ></div>
                   </div>
                   {isCancelled && (
-                    <div className="text-center text-red-600 font-semibold mt-2">
+                    <div className="text-center text-red-600 font-semibold mt-2 flex items-center justify-center gap-2">
+                      <XCircleIcon className="w-5 h-5" />
                       Đơn hàng đã huỷ
                     </div>
                   )}
@@ -173,7 +210,20 @@ export default function OrderDetail() {
                       </div>
                     </div>
                     <div className="font-semibold text-neutral-800">
-                      {(item.discountedPrice * item.quantity).toLocaleString()}₫
+                      {order.status === "delivered" && (
+                        <button
+                          className="btn"
+                          onClick={() =>
+                            setReviewModal({
+                              open: true,
+                              productId: item.productId,
+                              productName: item.productName,
+                            })
+                          }
+                        >
+                          Đánh giá
+                        </button>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -198,7 +248,7 @@ export default function OrderDetail() {
               </div>
               <div className="flex justify-between items-center border-t pt-4">
                 <div className="text-lg font-bold text-neutral-900">Tổng:</div>
-                <div className="text-2xl font-bold text-green-600">
+                <div className="text-2xl font-bold text-black">
                   {order.final_price.toLocaleString()}₫
                 </div>
               </div>
@@ -206,6 +256,74 @@ export default function OrderDetail() {
           </div>
         )}
       </section>
+      {reviewModal.open && (
+        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md shadow-lg">
+            <h3 className="font-bold mb-2">
+              Đánh giá: {reviewModal.productName}
+            </h3>
+            <div className="flex items-center mb-3">
+              <span className="mr-2">Số sao:</span>
+              {[1, 2, 3, 4, 5].map((star) => (
+                <button
+                  key={star}
+                  className={
+                    star <= rating ? "text-yellow-400" : "text-gray-300"
+                  }
+                  onClick={() => setRating(star)}
+                  type="button"
+                >
+                  ★
+                </button>
+              ))}
+            </div>
+            <textarea
+              className="w-full border rounded p-2 mb-3"
+              rows={3}
+              placeholder="Nhận xét của bạn"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+            />
+            <div className="flex justify-end gap-2">
+              <button
+                className="px-3 py-1 rounded bg-gray-200"
+                onClick={() =>
+                  setReviewModal({
+                    open: false,
+                    productId: null,
+                    productName: "",
+                  })
+                }
+              >
+                Đóng
+              </button>
+              <button
+                className="px-3 py-1 rounded bg-blue-600 text-white"
+                disabled={reviewLoading}
+                onClick={async () => {
+                  if (!reviewModal.productId) return;
+                  try {
+                    await handleSubmitReview(
+                      reviewModal.productId,
+                      rating,
+                      comment
+                    );
+                    setReviewModal({
+                      open: false,
+                      productId: null,
+                      productName: "",
+                    });
+                    setRating(5);
+                    setComment("");
+                  } catch {}
+                }}
+              >
+                {reviewLoading ? "Đang gửi..." : "Gửi đánh giá"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

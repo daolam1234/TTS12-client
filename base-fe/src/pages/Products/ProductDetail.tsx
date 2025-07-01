@@ -18,7 +18,7 @@ export default function ProductDetail() {
 
 
     if (isLoading) return <div>Loading...</div>;
-    if (!product) return <div>Không tìm thấy sản phẩm</div>;
+    if (!product) return <div>Không tìm thấy sản phẩm</div>; 
 
 
     const handleAddToCart = async () => {

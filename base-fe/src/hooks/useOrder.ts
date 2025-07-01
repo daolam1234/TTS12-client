@@ -3,12 +3,14 @@ import { useParams } from "react-router-dom";
 import instanceAxios from "@/utils/axios";
 import type { IOrder } from "@/types/order/order.type";
 import { toast } from "react-toastify";
+import type { IProductReview } from "@/types/productReview/productReview.type";
 
 export const useOrderDetail = () => {
   const { id } = useParams();
   const [order, setOrder] = useState<IOrder | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [cancelLoading, setCancelLoading] = useState<boolean>(false);
+  const [reviewLoading, setReviewLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (!id) return;
@@ -45,6 +47,26 @@ export const useOrderDetail = () => {
     }
   };
 
+    const handleSubmitReview = async (productId: string, rating: number, comment: string) => {
+    if (!id) return;
+    try {
+      setReviewLoading(true);
+      const res = await instanceAxios.post<{ data: IProductReview }>("/product-reviews/add", {
+        orderId: id,
+        productId,
+        rating,
+        comment,
+      });
+      toast.success("Đánh giá thành công");
+      return res.data.data;
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Đánh giá thất bại");
+      throw error;
+    } finally {
+      setReviewLoading(false);
+    }
+  };
+
   const getStatusStyle = (status: string) => {
     switch (status) {
       case "pending":
@@ -65,8 +87,10 @@ export const useOrderDetail = () => {
   return {
     order,
     loading,
+    reviewLoading,
     cancelLoading,
     handleCancelOrder,
+    handleSubmitReview,
     getStatusStyle,
   };
 };
