@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 // đường dẫn tùy bạn
 import type { CartItem } from '@/types/cart/cart.type';
 import type { CheckoutData, IOrderItem, IShippingAddress, IShippingMethod, PaymentMethod } from '@/types/order/order.type';
+import { validateCoupon } from '@/services/couponService';
+import type { Coupon } from '@/types/coupon/coupon';
 
 export const useCheckout = (cartItems: CartItem[]) => {
   const [checkoutData, setCheckoutData] = useState<CheckoutData>({
@@ -34,6 +36,9 @@ export const useCheckout = (cartItems: CartItem[]) => {
   const [provinces, setProvinces] = useState<any[]>([]);
   const [districts, setDistricts] = useState<any[]>([]);
   const [wards, setWards] = useState<any[]>([]);
+
+  const [appliedCoupon, setAppliedCoupon] = useState<Coupon | null>(null);
+  const [couponError, setCouponError] = useState<string | null>(null);
 
   useEffect(() => {
     fetch('https://provinces.open-api.vn/api/p/')
@@ -111,11 +116,20 @@ export const useCheckout = (cartItems: CartItem[]) => {
     }));
   };
 
-  const handleCouponChange = (code: string) => {
+  const handleCouponChange = async (code: string) => {
     setCheckoutData((prev: CheckoutData) => ({
       ...prev,
       couponCode: code
     }));
+    setCouponError(null);
+    setAppliedCoupon(null);
+    if (!code) return;
+    try {
+      const coupon = await validateCoupon(code);
+      setAppliedCoupon(coupon);
+    } catch (err: any) {
+      setCouponError(err.response?.data?.message || err.message || 'Mã giảm giá không hợp lệ');
+    }
   };
 
 
@@ -125,7 +139,11 @@ export const useCheckout = (cartItems: CartItem[]) => {
 
 
   const calculateDiscount = () => {
-    return checkoutData.couponCode ? 50000 : 0;
+    if (appliedCoupon) {
+      const subtotal = calculateSubtotal();
+      return Math.floor(subtotal * appliedCoupon.discount_percent / 100);
+    }
+    return 0;
   };
 
 
@@ -154,6 +172,8 @@ export const useCheckout = (cartItems: CartItem[]) => {
     calculateSubtotal,
     calculateDiscount,
     calculateTotal,
-    formatCurrency
+    formatCurrency,
+    appliedCoupon,
+    couponError
   };
 };

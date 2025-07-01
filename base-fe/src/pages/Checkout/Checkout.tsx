@@ -1,4 +1,3 @@
-
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -11,13 +10,16 @@ import { createOrder } from '@/services/orderServicets';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { clearCart as clearCartApi } from '@/services/cartService';
-
+import axios from '@/utils/axios';
+import { useState } from 'react';
 
 export default function Checkout() {
 
-  
   const navigate = useNavigate();
   const { cartItems, clearCart } = useCartStore();
+
+  // Thêm state cho input mã giảm giá
+  const [couponInput, setCouponInput] = useState('');
 
   const {
     checkoutData,
@@ -37,24 +39,48 @@ export default function Checkout() {
     calculateSubtotal,
     calculateDiscount,
     calculateTotal,
-    formatCurrency
+    formatCurrency,
+    appliedCoupon,
+    couponError
   } = useCheckout(cartItems);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (checkoutData.payment_method === 'vnpay') {
+      try {
+        // 1. Tạo đơn hàng trước
+        const orderRes = await createOrder(checkoutData);
+        const orderId = orderRes.data?._id || orderRes.data?.order?._id; // tuỳ backend trả về
+
+        if (!orderId) {
+          toast.error('Không lấy được mã đơn hàng!');
+          return;
+        }
+
+        // 2. Lưu đơn hàng tạm vào localStorage (nếu cần cho callback)
+        localStorage.setItem('pendingOrder', JSON.stringify({ ...checkoutData, _id: orderId }));
+
+        // 3. Gọi API backend để lấy link thanh toán VNPay
+        const res = await axios.post('/payments/vnpay/create-qr', { orderId });
+        if (res.data && res.data.paymentUrl) {
+          window.location.href = res.data.paymentUrl; // Redirect sang VNPay
+        } else {
+          toast.error('Không nhận được link thanh toán từ server');
+        }
+        return;
+      } catch (error: any) {
+        toast.error(error?.response?.data?.message || 'Có lỗi khi tạo đơn hàng/VNPay');
+        return;
+      }
+    }
+    // Xử lý các phương thức khác (COD, ...)
     try {
-      console.log("Dữ liệu gửi đi:", checkoutData);
       const response = await createOrder(checkoutData);
-      console.log("Phản hồi từ server:", response.data);
-  
-      // ✅ Clear giỏ hàng cả trên server lẫn local
-      await clearCartApi();   // Gọi API xoá cart backend
-      clearCart();            // Xoá local cart store
-  
+      await clearCartApi();
+      clearCart();
       toast.success('Đặt hàng thành công');
       navigate('/homepage');
     } catch (error) {
-      console.error('Lỗi khi đặt hàng:', error);
       toast.error('Đặt hàng thất bại');
     }
   };
@@ -294,16 +320,23 @@ export default function Checkout() {
               <CardContent>
                 <div className="flex gap-3">
                   <Input
-                    value={checkoutData.couponCode || ''}
-                    onChange={(e) => handleCouponChange(e.target.value)}
+                    value={couponInput}
+                    onChange={(e) => setCouponInput(e.target.value)}
                     placeholder="Nhập mã giảm giá"
                     className="flex-1"
                   />
-
-                  <Button variant="outline" type="button">
+                  <Button variant="outline" type="button" onClick={() => handleCouponChange(couponInput)}>
                     Áp dụng
                   </Button>
                 </div>
+                {couponError && (
+                  <div className="text-red-500 text-sm mt-2">{couponError}</div>
+                )}
+                {appliedCoupon && (
+                  <div className="text-green-600 text-sm mt-2">
+                    Áp dụng mã thành công: Giảm {appliedCoupon.discount_percent}%
+                  </div>
+                )}
               </CardContent>
             </Card>
 
@@ -371,9 +404,11 @@ export default function Checkout() {
                     <span className="text-gray-600">Phí vận chuyển:</span>
                     <span>{formatCurrency(checkoutData.shippingMethod.fee)}</span>
                   </div>
-                  {checkoutData.couponCode && (
+                  {appliedCoupon && (
                     <div className="flex justify-between text-green-600">
-                      <span>Giảm giá ({checkoutData.couponCode}):</span>
+                      <span>
+                        Giảm giá{appliedCoupon.code ? ` (${appliedCoupon.code})` : ""}:
+                      </span>
                       <span>-{formatCurrency(calculateDiscount())}</span>
                     </div>
                   )}

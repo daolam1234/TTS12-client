@@ -17,6 +17,7 @@ import Orders from "@/pages/User/Order";
 import OrderDetail from "@/pages/User/OrderDetail";
 import Profile from "@/pages/User/Profile";
 import Setting from "@/pages/User/Setting";
+import CheckPaymentVNPay from '@/pages/Checkout/CheckPaymentVNPay';
 import { createBrowserRouter, Navigate } from "react-router-dom";
 
 
@@ -108,6 +109,10 @@ export const router = createBrowserRouter([
       {
         path: 'member/settings',
         element: <Setting />
+      },
+      {
+        path: '/checkout/vnpay-callback',
+        element: <CheckPaymentVNPay />
       },
     ]
   },

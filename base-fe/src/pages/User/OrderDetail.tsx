@@ -242,6 +242,14 @@ export default function OrderDetail() {
                 <span>Phí vận chuyển:</span>
                 <span>{order.shippingMethod.fee.toLocaleString()}₫</span>
               </div>
+              {order.discount > 0 && (
+                <div className="flex justify-between text-sm text-green-600">
+                  <span>
+                    Giảm giá{order.coupon?.code ? ` (${order.coupon.code})` : ""}:
+                  </span>
+                  <span>-{order.discount.toLocaleString()}₫</span>
+                </div>
+              )}
               <div className="flex justify-between text-sm text-gray-600">
                 <span>Ghi chú:</span>
                 <span>{order.note || "Không có"}</span>
