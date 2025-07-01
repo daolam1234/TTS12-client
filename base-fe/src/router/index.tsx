@@ -10,7 +10,6 @@ import Checkout from "@/pages/Checkout/Checkout";
 import Contact from "@/pages/Contact/Contact";
 import HomePage from "@/pages/Homepage/HomePage";
 import ProductDetail from "@/pages/Products/ProductDetail";
-import Sale from "@/pages/Products/Sale";
 import Sneakers from "@/pages/Products/Sneakers";
 import Favorites from "@/pages/User/Favortites";
 import Orders from "@/pages/User/Order";
@@ -19,6 +18,7 @@ import Profile from "@/pages/User/Profile";
 import Setting from "@/pages/User/Setting";
 import CheckPaymentVNPay from '@/pages/Checkout/CheckPaymentVNPay';
 import { createBrowserRouter, Navigate } from "react-router-dom";
+import Coupon from "@/pages/Products/Coupon";
 
 
 
@@ -46,8 +46,8 @@ export const router = createBrowserRouter([
         element: <CategoryPage />
       },
       {
-        path: 'sale',
-        element: <Sale />
+        path: 'coupon',
+        element: <Coupon />
       },
       {
         path: 'contact',

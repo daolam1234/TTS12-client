@@ -12,6 +12,8 @@ import { useNavigate } from 'react-router-dom';
 import { clearCart as clearCartApi } from '@/services/cartService';
 import axios from '@/utils/axios';
 import { useState } from 'react';
+import { useMyCoupons } from '@/hooks/useMyCoupons';
+
 
 export default function Checkout() {
 
@@ -84,8 +86,12 @@ export default function Checkout() {
       toast.error('Đặt hàng thất bại');
     }
   };
-  
 
+
+  const { coupons, loading: loadingCoupons } = useMyCoupons();
+
+  // Lọc mã chưa dùng
+  const unusedCoupons = coupons.filter((item) => item.is_used === false);
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
@@ -274,39 +280,86 @@ export default function Checkout() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <CreditCard className="w-5 h-5" />
-                  Phương thức thanh toán
+                  <Tag className="w-5 h-5" />
+                  Mã giảm giá
                 </CardTitle>
                 <CardDescription>
-                  Chọn cách thanh toán thuận tiện nhất
+                  Chọn hoặc nhập mã giảm giá bạn đã lưu
                 </CardDescription>
               </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {paymentMethods.map((method) => (
-                    <div
-                      key={method.value}
-                      className={`flex items-center p-4 border rounded-lg cursor-pointer transition-colors ${checkoutData.payment_method === method.value
-                        ? 'border-blue-500 bg-blue-50'
-                        : 'border-gray-200 hover:border-gray-300'
-                        }`}
-                      onClick={() => handlePaymentMethodChange(method.value)}
-                    >
-                      <input
-                        type="radio"
-                        name="paymentMethod"
-                        checked={checkoutData.payment_method === method.value}
-                        onChange={() => handlePaymentMethodChange(method.value)}
-                        className="w-4 h-4 text-blue-600 mr-3"
-                      />
-                      <span className="font-medium">{method.label}</span>
-                    </div>
-                  ))}
+              <CardContent className="space-y-4">
+                {/* Select coupon từ danh sách đã lưu */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Chọn mã giảm giá đã lưu:
+                  </label>
+                  <Select
+                    onValueChange={(value) => {
+                      setCouponInput(value);
+                      handleCouponChange(value);
+                    }}
+                    value={appliedCoupon?.code || ''}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Chọn mã giảm giá" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {unusedCoupons.length > 0 ? (
+                        unusedCoupons.map((item) => (
+                          <SelectItem key={item._id} value={item.code}>
+                            {item.code} 
+                          </SelectItem>
+                        ))
+                      ) : (
+                        <div className="p-2 text-sm text-gray-500">
+                          {loadingCoupons ? 'Đang tải...' : 'Bạn chưa có mã giảm giá'}
+                        </div>
+                      )}
+                    </SelectContent>
+                  </Select>
                 </div>
+
+                {/* Hoặc nhập thủ công */}
+                <div className="flex gap-3">
+                  <Input
+                    value={couponInput}
+                    onChange={(e) => setCouponInput(e.target.value)}
+                    placeholder="Hoặc nhập mã giảm giá"
+                    className="flex-1"
+                  />
+                  <Button
+                    variant="outline"
+                    type="button"
+                    onClick={() => handleCouponChange(couponInput)}
+                  >
+                    Áp dụng
+                  </Button>
+                </div>
+
+                {couponError && (
+                  <div className="text-red-500 text-sm mt-2">{couponError}</div>
+                )}
+                {appliedCoupon && (
+                  <div className="text-green-600 text-sm mt-2">
+                    Áp dụng mã {appliedCoupon.code}: Giảm {appliedCoupon.discount_percent}%
+                  </div>
+                )}
               </CardContent>
             </Card>
 
-            Coupon Code
+
+          
+
+            {/* Note */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <FileText className="w-5 h-5" />
+                  Ghi chú
+                </CardTitle>
+                <CardDescription>
+                  Thêm ghi chú cho đơn hàng (tùy chọn)
+                 Coupon Code
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -338,18 +391,7 @@ export default function Checkout() {
                   </div>
                 )}
               </CardContent>
-            </Card>
-
-            {/* Note */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <FileText className="w-5 h-5" />
-                  Ghi chú
-                </CardTitle>
-                <CardDescription>
-                  Thêm ghi chú cho đơn hàng (tùy chọn)
-                </CardDescription>
+            </Card> </CardDescription>
               </CardHeader>
               <CardContent>
                 <textarea

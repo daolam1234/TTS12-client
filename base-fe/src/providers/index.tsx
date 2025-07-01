@@ -20,7 +20,15 @@ export const getList = async ({ resource = "products", params = {} }: Props) => 
     : "";
   const res = await instanceAxios.get(`${resource}${queryString}`);
   console.log("res.data:", res.data);
-  return res.data.data.products; // ✅ Trả về mảng sản phẩm
+
+  if (resource === "products") {
+    return res.data.data.products;
+  }
+  if (resource === "coupon") {
+    return res.data.data;
+  }
+  // fallback cho các resource khác
+  return res.data.data ?? null;
 };
 
 
