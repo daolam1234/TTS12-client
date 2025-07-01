@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import instanceAxios from "@/utils/axios";
 import type { IOrder } from "@/types/order/order.type";
+import { NavigationMember } from "@/components/nav/navMember";
 
 export default function Orders() {
   const [orders, setOrders] = useState<IOrder[]>([]);
@@ -38,7 +39,12 @@ export default function Orders() {
   return (
     <div className="min-h-screen bg-gray-50">
       <section className="max-w-6xl mx-auto px-6 py-10">
+     <div className="px-10 py-10">
+       <NavigationMember />
+     </div>
+
         <header className="mb-8">
+          
           <h1 className="text-4xl font-bold text-neutral-900">
             Đơn hàng của bạn
           </h1>

@@ -2,9 +2,11 @@ import ProductCard from "@/components/products/ProductCard";
 import { useOne } from "@/hooks";
 import type { Product, Variant } from "@/types/product/product.type";
 import { useNavigate, useParams } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { addToCart } from "@/services/cartService";
+import { addToWishlist as addToWishlistService, removeFromWishlist as removeFromWishlistService } from "@/services/wishlistService";
+import instanceAxios from "@/utils/axios";
 
 export default function ProductDetail() {
     const { id } = useParams();
@@ -14,6 +16,22 @@ export default function ProductDetail() {
     const [thumbnails, setthumbnails] = useState(0);
     const [selectedSizeIndex, setSelectedSizeIndex] = useState<number | null>(null);
     const [quantity, setQuantity] = useState(1);
+    const [isWishlisted, setIsWishlisted] = useState(false);
+
+    useEffect(() => {
+        const checkWishlist = async () => {
+            const token = localStorage.getItem("token");
+            if (!token || !product?._id) return;
+            try {
+                const res = await instanceAxios.get("/wishlist");
+                const wishlist = res.data.data || [];
+                setIsWishlisted(wishlist.some((p: any) => p._id === product._id));
+            } catch {
+                setIsWishlisted(false);
+            }
+        };
+        checkWishlist();
+    }, [product?._id]);
 
 
 
@@ -66,6 +84,31 @@ export default function ProductDetail() {
             toast.error(msg, {
             });
             console.error("❌ Lỗi khi thêm vào giỏ hàng:", err);
+        }
+    };
+
+    const handleWishlistToggle = async () => {
+        if (!product?._id) return;
+        const token = localStorage.getItem("token");
+        const user = localStorage.getItem("user");
+        if (!token || !user) {
+            toast.error("Vui lòng đăng nhập để thao tác.");
+            setTimeout(() => navigate("/login"), 2000);
+            return;
+        }
+        try {
+            if (isWishlisted) {
+                await removeFromWishlistService(product._id);
+                toast.success("Đã bỏ khỏi danh sách yêu thích!");
+                setIsWishlisted(false);
+            } else {
+                await addToWishlistService(product._id);
+                toast.success("Đã thêm vào danh sách yêu thích!");
+                setIsWishlisted(true);
+            }
+        } catch (err: any) {
+            const msg = err?.response?.data?.message || "Có lỗi xảy ra.";
+            toast.error(msg);
         }
     };
 
@@ -154,13 +197,16 @@ export default function ProductDetail() {
                         </div>
                         <button
                             onClick={handleAddToCart}
-                            className="flex-1 bg-black text-white py-3 rounded font-bold text-lg hover:bg-gray-800 transition"
+                            className="flex-1 btn"
                         >
-                            ADD TO CART
+                           THÊM VÀO GIỎ HÀNG
                         </button>
                     </div>
-                    <button className="flex items-center justify-center border border-black py-3 rounded font-bold text-lg gap-2 hover:bg-gray-100 transition">
-                        <span>♥</span> ADD TO THE WISHLIST
+                    <button
+                        onClick={handleWishlistToggle}
+                        className={`btn ${isWishlisted ? "bg-red-100 text-red-600" : ""}`}
+                    >
+                        <span>{isWishlisted ? "♥" : "♡"}</span> {isWishlisted ? "BỎ KHỎI DANH SÁCH YÊU THÍCH" : "THÊM VÀO DANH SÁCH YÊU THÍCH"}
                     </button>
 
 

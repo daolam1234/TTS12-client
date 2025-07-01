@@ -2,6 +2,7 @@ import ProductCard from "@/components/products/ProductCard";
 import type { User } from "@/types/user/user";
 import { useEffect, useState } from "react";
 import instanceAxios from "@/utils/axios";
+import { NavigationMember } from "@/components/nav/navMember";
 
 export default function Profile() {
     const [user, setUser] = useState<User | null>(null);
@@ -23,12 +24,8 @@ export default function Profile() {
 
     return (
         <div className="min-h-screen bg-gray-50">
-            <div className="flex  py-10 md:px-8 text-xl font-bold max-sm:justify-center max-sm:items-center ">
-                <a href="/member/profile" className="px-4 py-2 rounded hover:underline ">Profile</a>
-                <a href="/member/orders" className="px-4 py-2 rounded hover:underline ">Order</a>
-                <a href="" className="px-4 py-2 rounded hover:underline ">Favorite</a>
-                <a href="/member/settings" className="px-4 py-2 rounded hover:underline ">Setting</a>
-               
+            <div className="px-10 py-10">
+                <NavigationMember />
             </div>
             <div className=" gap-8 px-8 py-10 bg-white rounded-xl flex max-sm:flex-col max-sm:justify-center max-sm:items-center">
                 <img

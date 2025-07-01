@@ -12,6 +12,7 @@ import HomePage from "@/pages/Homepage/HomePage";
 import ProductDetail from "@/pages/Products/ProductDetail";
 import Sale from "@/pages/Products/Sale";
 import Sneakers from "@/pages/Products/Sneakers";
+import Favorites from "@/pages/User/Favortites";
 import Orders from "@/pages/User/Order";
 import OrderDetail from "@/pages/User/OrderDetail";
 import Profile from "@/pages/User/Profile";
@@ -29,30 +30,8 @@ export const router = createBrowserRouter([
         path: '',
         element: <Navigate to="/homepage" replace />
       },
-      {
-        path: 'contact',
-        element: <Contact />
-      },
-      {
-        path: 'cart',
-        element: <Cart />
-      },
-      {
-        path: 'register',
-        element: <Register />
-      },
-      {
-        path: 'login',
-        element: <Login />
-      },
-      {
-        path: '/verify-email/:token',
-        element: <VerifyEmail />
-      },
-      {
-        path: '/forgot-password',
-        element: <ForgotPass />
-      },
+
+      // public routes
       {
         path: 'homepage',
         element: <HomePage />
@@ -70,6 +49,33 @@ export const router = createBrowserRouter([
         element: <Sale />
       },
       {
+        path: 'contact',
+        element: <Contact />
+      },
+      {
+        path: 'cart',
+        element: <Cart />
+      },
+
+      //auth routes
+      {
+        path: 'register',
+        element: <Register />
+      },
+      {
+        path: 'login',
+        element: <Login />
+      },
+      {
+        path: '/verify-email/:token',
+        element: <VerifyEmail />
+      },
+      {
+        path: '/forgot-password',
+        element: <ForgotPass />
+      },
+      
+      {
         path: 'checkout',
         element: <Checkout />
       },
@@ -77,6 +83,8 @@ export const router = createBrowserRouter([
         path: 'products/:id',
         element: <ProductDetail />
       },
+
+      //member routes
       {
         path: '/member/profile',
         element: <Profile />
@@ -86,8 +94,16 @@ export const router = createBrowserRouter([
         element: <Orders />
       },
       {
+        path: '/member/orders',
+        element: <Orders />
+      },
+      {
         path: '/member/orders/:id',
         element: <OrderDetail />
+      },
+      {
+        path: '/member/favorites',
+        element: <Favorites />
       },
       {
         path: 'member/settings',
