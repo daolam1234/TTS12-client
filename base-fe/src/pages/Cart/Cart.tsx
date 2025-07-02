@@ -1,7 +1,9 @@
 // src/pages/Cart/Cart.tsx
 import { useEffect } from "react";
-import { useCartActions } from "@/hooks";
+import { useCartActions, useList } from "@/hooks";
 import { useNavigate } from "react-router-dom";
+import ProductCard from "@/components/products/ProductCard";
+import type { Product } from "@/types/product/product.type";
 
 export default function Cart() {
     const navigate = useNavigate();
@@ -23,6 +25,11 @@ export default function Cart() {
         // Cleanup function để clear timeouts khi component unmount
         return cleanup;
     }, []);
+
+    const { data } = useList({ resource: "products" });
+
+    // Lấy đúng mảng sản phẩm từ response
+    const products = data || [];
 
     return (
         <div className="bg-white min-h-screen px-4 py-10">
@@ -115,7 +122,26 @@ export default function Cart() {
                         <button className="btn w-full mt-4" onClick={() => navigate('/checkout')}>Checkout →</button>
                     </div>
                 )}
+
+                
+            
             </div>
+            {/* trend */}
+            <section className="px-10 py-10">
+                <header className="flex justify-between text-neutral-900">
+                    <h1 className="text-3xl font-bold max-md:text-4xl">
+                    BẠN CÓ THỂ THÍCH
+                    </h1>
+                </header>
+
+                <div className="flex gap-6 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 py-4">
+                    {products.map((product: Product) => (
+                        <div className="min-w-[380px] max-w-xs flex-shrink-0" key={product._id}>
+                            <ProductCard product={product} />
+                        </div>
+                    ))}
+                </div>
+            </section>
         </div>
     );
 }

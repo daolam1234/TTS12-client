@@ -29,13 +29,13 @@ export default function HomePage() {
                     </h1>
                 </header>
 
-                 <div className="grid grid-cols-1 px-10 sm:grid-cols-2 md:grid-cols-4 gap-6">
-                        {data?.slice(0, 8).map((product: Product) => (
-                          <Link key={product._id} to={`/products/${product._id}`}>
+                <div className="grid grid-cols-1 px-10 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                    {data?.slice(0, 8).map((product: Product) => (
+                        <Link key={product._id} to={`/products/${product._id}`}>
                             <ProductCard product={product} />
-                          </Link>
-                        ))}
-                      </div>
+                        </Link>
+                    ))}
+                </div>
             </section>
 
             {/* dang muc */}
@@ -48,24 +48,44 @@ export default function HomePage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-1  md:grid-cols-3 ">
                     <div className="relative group overflow-hidden">
-                        <img src="https://static.nike.com.cn/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/04feea87-f4ae-4fb0-88f9-2ee0eaef2603/AS+W+NK+SWSH+MED+SPT+BRA.png"
-                            alt="" className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
-                        <div className="absolute inset-0 bg-black bg-opacity-10 group-hover:bg-opacity-30 transition duration-300"></div>
-                        <div className="absolute bottom-4 left-4 bg-white px-3 py-1 text-sm font-bold">WOMENS</div>
+
+                        <Link
+                            to="/category/6847265b7287bc6f1dad15ac"
+
+                        >
+                            <img
+                                src="https://static.nike.com.cn/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/04feea87-f4ae-4fb0-88f9-2ee0eaef2603/AS+W+NK+SWSH+MED+SPT+BRA.png"
+                                alt=""
+                                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                            />
+                            <div className="absolute inset-0 bg-black bg-opacity-10 group-hover:bg-opacity-30 transition duration-300"></div>
+                            <div className="absolute bottom-4 left-4 bg-white px-3 py-1 text-sm font-bold">
+                                WOMENS
+                            </div>
+                        </Link>
                     </div>
 
                     <div className="relative group overflow-hidden">
-                        <img src="https://img01.ztat.net/article/spp-media-p1/837f2ad1ebde4b0abfd46ba01bd6285b/ea12113daf4343e8af5d4b08e5329651.jpg"
-                            alt="" className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
-                        <div className="absolute inset-0 bg-black bg-opacity-10 group-hover:bg-opacity-30 transition duration-300"></div>
-                        <div className="absolute bottom-4 left-4 bg-white px-3 py-1 text-sm font-bold">MENS</div>
+                        <Link
+                            to="/category/684725e07287bc6f1dad1592"
+
+                        >
+                            <img src="https://img01.ztat.net/article/spp-media-p1/837f2ad1ebde4b0abfd46ba01bd6285b/ea12113daf4343e8af5d4b08e5329651.jpg"
+                                alt="" className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                            <div className="absolute inset-0 bg-black bg-opacity-10 group-hover:bg-opacity-30 transition duration-300"></div>
+                            <div className="absolute bottom-4 left-4 bg-white px-3 py-1 text-sm font-bold">MENS</div>
+                        </Link>
                     </div>
 
                     <div className="relative group overflow-hidden">
-                        <img src="https://i.pinimg.com/736x/6e/59/c3/6e59c31f1b1352f58e9956e076529c21.jpg"
-                            alt="" className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
-                        <div className="absolute inset-0 bg-black bg-opacity-10 group-hover:bg-opacity-30 transition duration-300"></div>
-                        <div className="absolute bottom-4 left-4 bg-white px-3 py-1 text-sm font-bold">KIDS</div>
+                        <Link
+                            to="/category/68472a4426f919a84b33eb89"
+                        >
+                            <img src="https://i.pinimg.com/736x/6e/59/c3/6e59c31f1b1352f58e9956e076529c21.jpg"
+                                alt="" className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                            <div className="absolute inset-0 bg-black bg-opacity-10 group-hover:bg-opacity-30 transition duration-300"></div>
+                            <div className="absolute bottom-4 left-4 bg-white px-3 py-1 text-sm font-bold">KIDS</div>
+                        </Link>
                     </div>
                 </div>
             </section>

@@ -172,7 +172,9 @@ export default function Checkout() {
                       <SelectTrigger>
                         <SelectValue placeholder="Chọn tỉnh/thành phố" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent
+                        className="bg-white border border-gray-200 shadow-xl rounded-xl max-h-64 overflow-auto scrollbar-thin scrollbar-thumb-gray-300"
+                      >
                         {provinces.map((province) => (
                           <SelectItem key={province.code} value={province.code.toString()}>
                             {province.name}
@@ -195,7 +197,9 @@ export default function Checkout() {
                       <SelectTrigger>
                         <SelectValue placeholder="Chọn quận/huyện" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent
+                        className="bg-white border border-gray-200 shadow-xl rounded-xl max-h-64 overflow-auto scrollbar-thin scrollbar-thumb-gray-300"
+                      >
                         {districts.map((district) => (
                           <SelectItem key={district.code} value={district.code.toString()}>
                             {district.name}
@@ -218,7 +222,9 @@ export default function Checkout() {
                       <SelectTrigger>
                         <SelectValue placeholder="Chọn phường/xã" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent
+                        className="bg-white border border-gray-200 shadow-xl rounded-xl max-h-64 overflow-auto scrollbar-thin scrollbar-thumb-gray-300"
+                      >
                         {wards.map((ward) => (
                           <SelectItem key={ward.code} value={ward.name}>
                             {ward.name}
@@ -303,11 +309,11 @@ export default function Checkout() {
                     <SelectTrigger>
                       <SelectValue placeholder="Chọn mã giảm giá" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-white border border-gray-200 shadow-md">
                       {unusedCoupons.length > 0 ? (
                         unusedCoupons.map((item) => (
-                          <SelectItem key={item._id} value={item.code}>
-                            {item.code} 
+                          <SelectItem className='text-red-500' key={item._id} value={item.code}>
+                            {item.code}
                           </SelectItem>
                         ))
                       ) : (
@@ -348,7 +354,7 @@ export default function Checkout() {
             </Card>
 
 
-          
+
 
             {/* Note */}
             <Card>
@@ -359,39 +365,8 @@ export default function Checkout() {
                 </CardTitle>
                 <CardDescription>
                   Thêm ghi chú cho đơn hàng (tùy chọn)
-                 Coupon Code
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Tag className="w-5 h-5" />
-                  Mã giảm giá
-                </CardTitle>
-                <CardDescription>
-                  Nhập mã giảm giá nếu có
+
                 </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex gap-3">
-                  <Input
-                    value={couponInput}
-                    onChange={(e) => setCouponInput(e.target.value)}
-                    placeholder="Nhập mã giảm giá"
-                    className="flex-1"
-                  />
-                  <Button variant="outline" type="button" onClick={() => handleCouponChange(couponInput)}>
-                    Áp dụng
-                  </Button>
-                </div>
-                {couponError && (
-                  <div className="text-red-500 text-sm mt-2">{couponError}</div>
-                )}
-                {appliedCoupon && (
-                  <div className="text-green-600 text-sm mt-2">
-                    Áp dụng mã thành công: Giảm {appliedCoupon.discount_percent}%
-                  </div>
-                )}
-              </CardContent>
-            </Card> </CardDescription>
               </CardHeader>
               <CardContent>
                 <textarea
