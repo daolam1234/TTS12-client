@@ -10,8 +10,13 @@ export const useMyCoupons = () => {
     setLoading(true);
     try {
       const res = await instanceAxios.get('/coupon-user/my-coupons');
-      setCoupons(res.data.data as MyCoupon[]);
+      if (res && res.data && Array.isArray(res.data.data)) {
+        setCoupons(res.data.data as MyCoupon[]);
+      } else {
+        setCoupons([]);
+      }
     } catch (error) {
+      setCoupons([]);
       console.error('Failed to fetch coupons', error);
     } finally {
       setLoading(false);

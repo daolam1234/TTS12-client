@@ -48,36 +48,12 @@ export default function Checkout() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (checkoutData.payment_method === 'vnpay') {
-      try {
-        // 1. Tạo đơn hàng trước
-        const orderRes = await createOrder(checkoutData);
-        const orderId = orderRes.data?._id || orderRes.data?.order?._id; // tuỳ backend trả về
-
-        if (!orderId) {
-          toast.error('Không lấy được mã đơn hàng!');
-          return;
-        }
-
-        // 2. Lưu đơn hàng tạm vào localStorage (nếu cần cho callback)
-        localStorage.setItem('pendingOrder', JSON.stringify({ ...checkoutData, _id: orderId }));
-
-        // 3. Gọi API backend để lấy link thanh toán VNPay
-        const res = await axios.post('/payments/vnpay/create-qr', { orderId });
-        if (res.data && res.data.paymentUrl) {
-          window.location.href = res.data.paymentUrl; // Redirect sang VNPay
-        } else {
-          toast.error('Không nhận được link thanh toán từ server');
-        }
-        return;
-      } catch (error: any) {
-        toast.error(error?.response?.data?.message || 'Có lỗi khi tạo đơn hàng/VNPay');
-        return;
-      }
-    }
-    // Xử lý các phương thức khác (COD, ...)
+    // Chỉ xử lý COD
     try {
-      const response = await createOrder(checkoutData);
+      const response = await createOrder({
+        ...checkoutData,
+        payment_method: 'cod', // Đảm bảo luôn là COD
+      });
       await clearCartApi();
       clearCart();
       toast.success('Đặt hàng thành công');
@@ -286,75 +262,35 @@ export default function Checkout() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Tag className="w-5 h-5" />
-                  Mã giảm giá
+                  <CreditCard className="w-5 h-5" />
+                  Phương thức thanh toán
                 </CardTitle>
                 <CardDescription>
-                  Chọn hoặc nhập mã giảm giá bạn đã lưu
+                  Chỉ hỗ trợ thanh toán khi nhận hàng (COD)
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
-                {/* Select coupon từ danh sách đã lưu */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Chọn mã giảm giá đã lưu:
-                  </label>
-                  <Select
-                    onValueChange={(value) => {
-                      setCouponInput(value);
-                      handleCouponChange(value);
-                    }}
-                    value={appliedCoupon?.code || ''}
+              <CardContent>
+                <div className="space-y-3">
+                  <div
+                    className={`flex items-center justify-between p-4 border rounded-lg bg-blue-50 border-blue-500`}
                   >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Chọn mã giảm giá" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-white border border-gray-200 shadow-md">
-                      {unusedCoupons.length > 0 ? (
-                        unusedCoupons.map((item) => (
-                          <SelectItem className='text-red-500' key={item._id} value={item.code}>
-                            {item.code}
-                          </SelectItem>
-                        ))
-                      ) : (
-                        <div className="p-2 text-sm text-gray-500">
-                          {loadingCoupons ? 'Đang tải...' : 'Bạn chưa có mã giảm giá'}
-                        </div>
-                      )}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {/* Hoặc nhập thủ công */}
-                <div className="flex gap-3">
-                  <Input
-                    value={couponInput}
-                    onChange={(e) => setCouponInput(e.target.value)}
-                    placeholder="Hoặc nhập mã giảm giá"
-                    className="flex-1"
-                  />
-                  <Button
-                    variant="outline"
-                    type="button"
-                    onClick={() => handleCouponChange(couponInput)}
-                  >
-                    Áp dụng
-                  </Button>
-                </div>
-
-                {couponError && (
-                  <div className="text-red-500 text-sm mt-2">{couponError}</div>
-                )}
-                {appliedCoupon && (
-                  <div className="text-green-600 text-sm mt-2">
-                    Áp dụng mã {appliedCoupon.code}: Giảm {appliedCoupon.discount_percent}%
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="radio"
+                        name="paymentMethod"
+                        checked={true}
+                        readOnly
+                        className="w-4 h-4 text-blue-600"
+                      />
+                      <div>
+                        <p className="font-medium">Thanh toán khi nhận hàng (COD)</p>
+                        <p className="text-sm text-gray-600">Bạn sẽ thanh toán khi nhận hàng</p>
+                      </div>
+                    </div>
                   </div>
-                )}
+                </div>
               </CardContent>
             </Card>
-
-
-
 
             {/* Note */}
             <Card>
