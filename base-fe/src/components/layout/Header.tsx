@@ -3,9 +3,11 @@ import { Logo } from "../nav/Logo";
 import { NavigationMenu } from "../nav/NavigationMenu";
 import { BagIcon } from "../Icons/BagIcon";
 import { useState } from "react";
+import SearchModal from "../common/SearchModal";
 
 export default function Header() {
     const [menuOpen, setMenuOpen] = useState(false);
+    const [searchOpen, setSearchOpen] = useState(false);
 
     return (
         <div>
@@ -25,7 +27,9 @@ export default function Header() {
                 <nav className="flex items-center h-full">
                     <div className="flex items-center px-5 py-0 h-full  max-md:px-4 max-md:py-0 max-sm:px-2.5 max-sm:py-0">
                         <div className="flex flex-col justify-center items-center h-[33px] w-[33px] max-sm:w-10 max-sm:h-[33px]">
-                            <SearchIcon />
+                            <button onClick={() => setSearchOpen(true)} aria-label="Tìm kiếm">
+                                <SearchIcon />
+                            </button>
                         </div>
                     </div>
                     <div className="flex items-center px-5 py-0 h-full  max-md:px-4 max-md:py-0 max-sm:px-2.5 max-sm:py-0">
@@ -52,6 +56,8 @@ export default function Header() {
                     </div>
                 </div>
             )}
+            {/* Modal tìm kiếm */}
+            <SearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />
         </div>
     );
 }
